@@ -29,6 +29,28 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;}
 
+.social-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3em;
+    padding-bottom: 3em;
+    border-bottom: 1px solid rgba(5, 2, 92, 0.2);
+}
+
+.social-links h2 {
+    margin: 0;
+	padding: 1em 0 0 0;
+    flex-shrink: 0;
+}
+
+.social-links .icons {
+    display: flex;
+    justify-content: right;
+    flex-grow: 1;
+    margin: 0;
+}
+
 body {
 	line-height: 1;
 }
@@ -115,14 +137,14 @@ input, select, textarea {
 
 /* Type */
 
-	body, input, select, textarea {
+	body, select, input, textarea {
 		color: #212124;
-		font-family: "Source Sans Pro", Helvetica, sans-serif;
-		font-size: 16pt;
+		font-family: "Source Sans Pro", Helvetica, sans-serif ;
+		font-size: 14pt;
 		font-weight: 300;
 		line-height: 1.75;
 	}
-
+	
 		@media screen and (max-width: 1680px) {
 
 			body, input, select, textarea {
@@ -2131,6 +2153,7 @@ input, select, textarea {
 		font-size: 0.9em;
 		font-weight: 900;
 		margin: 0 0 1em 0;
+		
 	}
 
 	input[type="text"],
@@ -2185,7 +2208,7 @@ input, select, textarea {
 	}
 
 		select option {
-			background: #ffffff;
+			background: #e4dbf9;
 		}
 
 		select:focus::-ms-value {
@@ -2205,7 +2228,7 @@ input, select, textarea {
 
 	textarea {
 		padding: 0;
-		min-height: 3.75em;
+		min-height: 2.5em;
 	}
 
 	input[type="checkbox"],
@@ -3254,7 +3277,7 @@ input, select, textarea {
 				margin-top: 5em;
 				list-style: none;
 				font-size: 0.8em;
-				color: rgba(88, 88, 88, 0.5);
+				color: rgba(255, 255, 255, 0.5);
 			}
 
 				#footer > .inner .copyright a {
@@ -3263,7 +3286,7 @@ input, select, textarea {
 
 				#footer > .inner .copyright li {
 					display: inline-block;
-					border-left: solid 1px rgba(88, 88, 88, 0.15);
+					border-left: solid 1px rgba(250, 250, 250, 0.15);
 					line-height: 1;
 					padding: 0 0 0 1em;
 					margin: 0 0 0 1em;
@@ -3358,9 +3381,21 @@ input, select, textarea {
 					#footer > .inner .copyright li:first-child {
 						margin-top: 0;
 					}
+					
 
 		}
 
+		.footer-form input,
+		.footer-form textarea {
+			color: inherit;
+			border-bottom-color: #ffffff;
+		}
+
+		.footer-form input::placeholder,
+		.footer-form textarea::placeholder {
+			color: rgba(255, 255, 255, 0.4);
+		}
+		
 /* Wrapper */
 
 	#wrapper > * > .inner {
