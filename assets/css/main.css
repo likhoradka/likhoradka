@@ -2574,7 +2574,7 @@ input, select, textarea {
 		-webkit-flex-wrap: wrap;
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
-		postiion: relative;
+		position: relative;
 		margin: -2.5em 0 0 -2.5em;
 	}
 
@@ -2689,14 +2689,16 @@ input, select, textarea {
 
 			.tiles article > a h2 {
 				width: 100%;
-				text-align: center;
 				margin: 0;
+				display: flex;
+    			justify-content: center;
+    			align-items: center;
 			}
 
 			.tiles article > a h2 span {
 				position: relative;
 				display: inline-block;
-				padding: 6px;
+				padding-bottom: 6px;
 			}
 
 			.tiles article > a h2 span:after {
