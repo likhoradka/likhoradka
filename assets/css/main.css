@@ -121,8 +121,10 @@ input, select, textarea {
 	}
 
 	body {
-		background: #b8bdb0;
+		background: url('../../images/background.jpg') no-repeat center center fixed;
+    	background-size: cover;
 	}
+
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
 			-moz-animation: none !important;
