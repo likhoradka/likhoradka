@@ -2308,6 +2308,21 @@ input, select, textarea {
 			padding: 0;
 		}
 
+		.box.alt .image.fit {
+			border-radius: 4px;
+			display: block;
+		}
+
+		.box.alt .image.fit img {
+			display: block;
+			width: 100%;
+			transition: transform 0.5s ease;
+		}
+
+		.box.alt .image.fit:hover img {
+			transform: scale(1.1);
+		}
+
 /* Image */
 
 	.image {
@@ -2701,7 +2716,7 @@ input, select, textarea {
 				padding-bottom: 6px;
 			}
 
-			.tiles article > a h2 span:after {
+			.tiles article > a h2 > span:after {
 				content: '';
 				position: absolute;
 				bottom: 0;
@@ -2713,8 +2728,8 @@ input, select, textarea {
 			}
 
 			.tiles article > a:hover h2 span:after {
-				width: 110%;
-				left: -5%;
+				width: 120%;
+				left: -10%;
 			}
 
 				.tiles article > a .content {
@@ -2780,6 +2795,9 @@ input, select, textarea {
 
 		* + .tiles {
 			margin-top: 2em;
+		}
+		#long-title {
+		 max-width: 8em;
 		}
 
 		body.is-preload .tiles article {
@@ -3179,15 +3197,19 @@ input, select, textarea {
 /* Main */
 
 	#main {
-		padding: 0em 0 6em 0 ;
+		padding: 0em 0 3em 0 ;
 	}
 
 		@media screen and (max-width: 736px) {
 
 			#main {
-				padding: 0em 0 4em 0 ;
+				padding: 0em 0 1em 0 ;
 			}
 
+		}
+
+		#main .inner {
+			padding: 1em 0 1em 0;
 		}
 
 /* Footer */
