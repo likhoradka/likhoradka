@@ -89,97 +89,130 @@
 
 			});
 
-	// Menu.
-		var $menu = $('#menu');
+// Menu.
+var $menu = $('#menu');
 
-		$menu.wrapInner('<div class="inner"></div>');
+$menu.wrapInner('<div class="inner"></div>');
 
-		$menu._locked = false;
+$menu._locked = false;
 
-		$menu._lock = function() {
+$menu._lock = function() {
+    if ($menu._locked)
+        return false;
 
-			if ($menu._locked)
-				return false;
+    $menu._locked = true;
 
-			$menu._locked = true;
+    window.setTimeout(function() {
+        $menu._locked = false;
+    }, 350);
 
-			window.setTimeout(function() {
-				$menu._locked = false;
-			}, 350);
+    return true;
+};
 
-			return true;
+$menu._show = function() {
+    if ($menu._lock())
+        $body.addClass('is-menu-visible');
+};
 
-		};
+$menu._hide = function() {
+    if ($menu._lock())
+        $body.removeClass('is-menu-visible');
+};
 
-		$menu._show = function() {
+$menu._toggle = function() {
+    if ($menu._lock())
+        $body.toggleClass('is-menu-visible');
+};
 
-			if ($menu._lock())
-				$body.addClass('is-menu-visible');
+$menu
+    .appendTo($body)
+    .on('click', function(event) {
+        event.stopPropagation();
+    })
+    .on('click', 'a', function(event) {
+        var href = $(this).attr('href');
 
-		};
+        event.preventDefault();
+        event.stopPropagation();
 
-		$menu._hide = function() {
+        // Hide.
+        $menu._hide();
+		
 
-			if ($menu._lock())
-				$body.removeClass('is-menu-visible');
+        // Redirect.
+        if (href == '#menu')
+            return;
 
-		};
+        window.setTimeout(function() {
+            window.location.href = href;
+        }, 350);
+    })
+    .append('<a class="close" href="#menu"><i class="fas fa-times"></i></a>');
 
-		$menu._toggle = function() {
+$body
+    .on('click', 'a[href="#menu"]', function(event) {
+        event.stopPropagation();
+        event.preventDefault();
 
-			if ($menu._lock())
-				$body.toggleClass('is-menu-visible');
+        // Toggle.
+        $menu._toggle();
+    })
+    .on('click', function(event) {
+        // Only hide if clicking outside menu
+        if (!$(event.target).closest('#menu').length) {
+            $menu._hide();
+        }
+    })
+    .on('keydown', function(event) {
+        // Hide on escape.
+        if (event.keyCode == 27)
+            $menu._hide();
+    });
 
-		};
 
-		$menu
-			.appendTo($body)
-			.on('click', function(event) {
-				event.stopPropagation();
-			})
-			.on('click', 'a', function(event) {
+// Touch: tap a tile to activate (grow + caption); tap the active tile again to
+// follow its link; tap elsewhere to deactivate. Desktop keeps pure hover.
+if ($body.hasClass('is-touch')) {
+    $body.on('click', '.tiles article > a, .archive-tiles article > a', function(event) {
+        var $art = $(this).closest('article');
+        if (!$art.hasClass('is-active')) {
+            event.preventDefault();
+            event.stopPropagation();
+            $('.tiles article, .archive-tiles article').removeClass('is-active');
+            $art.addClass('is-active');
+        }
+        // already active → let the navigation proceed
+    });
+    // Tap outside any tile clears the active state.
+    $body.on('click', function(event) {
+        if (!$(event.target).closest('.tiles article, .archive-tiles article').length) {
+            $('.tiles article, .archive-tiles article').removeClass('is-active');
+        }
+    });
+}
 
-				var href = $(this).attr('href');
+// Once the navbar has collapsed to logo-only (<=540px), a tap anywhere on the
+// navbar opens the popup menu (the whole bar is the trigger). Above that width
+// the navbar's links — and the logo's home link — behave as usual.
+(function() {
+    var navMQ = window.matchMedia('(max-width: 540px)');
+    $body.on('click', '#navbar', function(event) {
+        if (navMQ.matches) {
+            event.preventDefault();
+            event.stopPropagation();
+            $menu._toggle();
+        }
+    });
+})();
 
-				event.preventDefault();
-				event.stopPropagation();
+// Prevent clicks on content when menu is open, but allow hover
+$body.on('click', '#wrapper a, #wrapper button, #wrapper input', function(event) {
+    if ($body.hasClass('is-menu-visible')) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+    }
+});
 
-				// Hide.
-					$menu._hide();
-
-				// Redirect.
-					if (href == '#menu')
-						return;
-
-					window.setTimeout(function() {
-						window.location.href = href;
-					}, 350);
-
-			})
-			.append('<a class="close" href="#menu">Close</a>');
-
-		$body
-			.on('click', 'a[href="#menu"]', function(event) {
-
-				event.stopPropagation();
-				event.preventDefault();
-
-				// Toggle.
-					$menu._toggle();
-
-			})
-			.on('click', function(event) {
-
-				// Hide.
-					$menu._hide();
-
-			})
-			.on('keydown', function(event) {
-
-				// Hide on escape.
-					if (event.keyCode == 27)
-						$menu._hide();
-
-			});
 
 })(jQuery);

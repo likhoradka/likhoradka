@@ -1,18 +1,125 @@
 @import url(fontawesome-all.min.css);
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700,900");
 
-/*
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+@font-face {
+    font-family: 'Adelphe';
+    src: url('../webfonts/Adelphe-Trouble-FructidorSemiBold.woff2') format('woff2'),
+         url('../webfonts/Adelphe-Trouble-FructidorSemiBold.woff')  format('woff');
+    font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Adelphe';
+    src: url('../webfonts/Adelphe-Trouble-FructidorBoldItalic.woff2') format('woff2'),
+         url('../webfonts/Adelphe-Trouble-FructidorBoldItalic.woff')  format('woff');
+    font-weight: 900; font-style: italic; font-display: swap;
+}
+@font-face {
+    font-family: 'Adelphe';
+    src: url('../webfonts/Adelphe-Trouble-FructidorRegular.woff2') format('woff2'),
+         url('../webfonts/Adelphe-Trouble-FructidorRegular.woff')  format('woff');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Compagnon';
+    src: url('../webfonts/Compagnon-Medium.woff2') format('woff2'),
+         url('../webfonts/Compagnon-Medium.woff')  format('woff');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Pontus';
+    src: url('../webfonts/pontus-bold.otf') format('opentype');
+    font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Pontus';
+    src: url('../webfonts/pontus-regular.otf') format('opentype');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+
+:root {
+    --main-colour: #1c1914;
+    --ink:         #1c1914;   /* title outline-stroke colour */
+    --border:      rgba(28, 25, 20, 0.7);
+    --paper:       #e8e5df;   /* darker — footer / page-copy frame */
+    --cream:       #f5f2ec;   /* lighter — page background / layer fills */
+    --accent-1:    #4a5b8f;
+	--accent-2:    rgba(72, 53, 38, 0.7);
+
+    /* ── Layout ── */
+    /* Single source of truth for the left/right gutter on every main section +
+       footer. 6em until the `stack` breakpoint, then 1.5em (see media query). */
+    --pad-x: 6em;
+
+    /* ── Type system ── */
+    --font-display: 'Adelphe', Georgia, serif;
+    --font-mono:    'Compagnon', 'Courier New', monospace;
+    --font-body:    Constantia, Georgia, serif;
+    --fw-regular:   400;
+    --fw-semi:      600;
+    --fw-bold:      800;
+	--fw-bolditalic: 800;
+}
+
+/* ── Type classes — apply to any element on any page ─────────────────────── */
+
+.t-heading {         /* Adelphe Bold Italic — h1/h2 headings */
+    font-family: var(--font-display);
+    font-weight: var(--fw-bolditalic);
+    font-style: italic;
+    font-variant: normal;
+}
+.t-heading-upright { /* Adelphe SemiBold — headings without italic */
+    font-family: var(--font-display);
+    font-weight: var(--fw-semi);
+    font-style: normal;
+    font-variant: normal;
+}
+.t-subheading {      /* Adelphe Regular */
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-style: normal;
+    font-variant: normal;
+}
+
+/* Adelphe titles — transparent fill + outline stroke (all headings use --font-display) */
+h1, h2, h3, h4, h5, h6,
+.t-heading, .t-heading-upright, .t-subheading {
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.5px var(--ink);
+}
+
+/* Exception: Selected-Works tile titles stay solid-filled (no stroke) */
+.tiles article > a h2,
+.tiles article > a h2 * {
+    -webkit-text-fill-color: currentColor;
+    -webkit-text-stroke: 0;
+}
+.t-mono {            /* Compagnon — nav, labels, copyright */
+    font-family: var(--font-mono);
+    font-weight: var(--fw-regular);
+    font-style: normal;
+    font-variant: normal;
+}
+.t-body {            /* Constantia Georgia — body copy */
+    font-family: var(--font-body);
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+.t-body-caps {       /* Constantia small-caps — captions, labels */
+    font-family: var(--font-body);
+    font-weight: normal;
+    font-style: normal;
+    font-variant: small-caps;
+}
+
+
 
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
 code, del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var, b,
-u, i, center, dl, dt, dd, ol, ul, li, fieldset,
+u, i, center, dl, dt, dd, ol, li, fieldset,
 form, label, legend, table, caption, tbody,
 tfoot, thead, tr, th, td, article, aside,
 canvas, details, embed, figure, figcaption,
@@ -29,26 +136,33 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;}
 
-.social-links {
+/* Direct-child combinators so this only targets a contact-style social
+   block placed directly in #main > .inner — NOT the footer's nested one
+   (the footer now lives inside #main on the index page). */
+#main > .inner > .social-links {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 3em;
-    padding-bottom: 3em;
-    border-bottom: 1px solid rgba(5, 2, 92, 0.2);
+    margin-bottom: 2em;
+    padding-top: 3em;        /* top breathing room for the "FOLLOW MY WORK" block */
+    padding-bottom: 1.5em;   /* decreased */
+    border-bottom: 1.5px solid var(--accent-1);
 }
 
-.social-links h2 {
+#main > .inner > .social-links h2 {
     margin: 0;
 	padding: 1em 0 0 0;
     flex-shrink: 0;
+	align-items: center;
+	display:flex;
+	height: 100%;
 }
 
 .social-links .icons {
     display: flex;
-    justify-content: right;
-    flex-grow: 1;
-    margin: 0;
+    justify-content: center;
+	align-items: center;
+	height: 100%;
 }
 
 body {
@@ -75,6 +189,12 @@ table {
 
 body {
 	-webkit-text-size-adjust: none;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+	display: none;
 }
 
 mark {
@@ -94,6 +214,196 @@ input, select, textarea {
 	appearance: none;
 }
 
+/* Menu trigger button - bottom right, hidden until scroll */
+#menu-trigger {
+    position: fixed;
+    bottom: 1.55em;
+    right: 1.75em;
+    width: 2.5em;
+    height: 2.5em;
+    z-index: 10001;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    border: none;
+    background: var(--accent-1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu-trigger.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#menu-trigger.visible:hover {
+	animation: IconPulse 1.25s 
+	ease-out forwards;
+}
+
+body.modal-open #menu-trigger {
+    pointer-events: none;
+}
+
+#menu-trigger img {
+    width: 2em;
+    height: 2em;
+}
+
+/* Menu grows from centre */
+#menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 400px;
+    height: 400px;
+    box-sizing: border-box;
+    background: var(--cream);
+    color: inherit;
+    z-index: 10002;
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+}
+
+body.is-menu-visible #menu {
+    transform: translate(-50%, -50%) scale(1);
+    visibility: visible;
+}
+
+#menu .inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+	font-size: 13pt;
+}
+
+#menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 !important;
+    padding-inline-start: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#menu ul li {
+    overflow: hidden;
+    padding: 0.4em 0;
+    border: none;
+    width: 100%;
+    text-align: center;
+}
+
+#menu ul li a {
+    display: block;
+    padding: 0;
+    text-decoration: none;
+    border: 0;
+    transform: translateY(110%);
+    transition: none;
+    /* Unify with nav + metadata text — Compagnon Medium, uppercase, tracked */
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.8em;
+}
+
+/* 6 items: home icon, manifesto, archive, contact, divider, coming-soon */
+body.is-menu-visible #menu ul li:nth-child(1) a    { transform: translateY(0); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.30s; }
+body.is-menu-visible #menu ul li:nth-child(2) a    { transform: translateY(0); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.36s; }
+body.is-menu-visible #menu ul li:nth-child(3) a    { transform: translateY(0); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.42s; }
+body.is-menu-visible #menu ul li:nth-child(4) a    { transform: translateY(0); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.48s; }
+/* coming-soon label slides up like the link items */
+body.is-menu-visible #menu ul li.menu-cs-group .menu-cs-label { transform: translateY(0); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.54s; }
+
+/* "coming soon" label — overflow:hidden so the translateY slide clips correctly */
+#menu ul li.menu-cs-group {
+    overflow: hidden;
+}
+/* Label matches menu link appearance; no cursor override so custom cursor holds */
+.menu-cs-label {
+    display: block;
+    transform: translateY(110%);
+    transition: none;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.8em;
+}
+
+/* "coming soon" hover chips — two separate boxes that drift around the cursor.
+   z-index 10003: each chip is reparented to <body> (see its JS), so it shares
+   the root stacking context with #menu (10002). On the index page #wrapper does
+   NOT trap the menu, so the chips must simply outrank #menu — 10003 does that.
+   This sits above the grain overlay (body::after, 9000), which is fine: on an
+   open menu the menu already paints above the grain, so being on top wins.
+   JS sets left/top each frame; the transform only centres the box on that point. */
+.menu-cs-chip {
+    position: fixed;
+    z-index: 10003;
+    pointer-events: none;       /* never intercepts — preserves custom cursor */
+    padding: 0.5em 0.9em;
+    border: 1.5px solid var(--main-colour);
+    background: var(--cream);
+    opacity: 0;
+    transition: opacity 0.18s ease;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.7em;
+    line-height: 1;
+    white-space: nowrap;
+}
+.menu-cs-chip.is-visible {
+    opacity: 1;
+}
+
+#menu > .close {
+    display: none;
+}
+
+/* Overlay - invisible click-to-close layer */
+#menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 10001;
+    visibility: hidden;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+body.is-menu-visible #menu-overlay {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Match modal overlay: greyscale + fade when menu is open */
+body.is-menu-visible {
+    overflow: hidden;
+}
+
+body.is-menu-visible #wrapper {
+    filter: grayscale(1);
+    opacity: 0.45;
+}
+
+/* Menu sits above the overlay */
+#menu {
+    z-index: 10002;
+}
+
 /* Basic */
 
 	@-ms-viewport {
@@ -101,7 +411,7 @@ input, select, textarea {
 	}
 
 	body {
-		-ms-overflow-style: scrollbar;
+		-ms-overflow-style: none;
 	}
 
 	@media screen and (max-width: 480px) {
@@ -114,6 +424,12 @@ input, select, textarea {
 
 	html {
 		box-sizing: border-box;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	html::-webkit-scrollbar {
+		display: none;
 	}
 
 	*, *:before, *:after {
@@ -121,8 +437,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: url('../../images/background.jpg') no-repeat center center fixed;
-    	background-size: cover;
+		background-color: var(--cream);
 	}
 
 
@@ -137,15 +452,24 @@ input, select, textarea {
 			transition: none !important;
 		}
 
+
+
 /* Type */
 
-	body, select, input, textarea {
+	body, select {
+		background-color: var(--cream);
 		color: #212124;
-		font-family: "Source Sans Pro", Helvetica, sans-serif ;
-		font-size: 14pt;
+		font-family:var(--font-body);
+		font-variant: small-caps;
+		font-size: 12pt;
 		font-weight: 300;
 		line-height: 1.75;
 	}
+	input, textarea{ 
+		font-family:var(--font-body);
+		font-size: 12pt;
+		font-weight: 300;
+		line-height: 1.75;}
 	
 		@media screen and (max-width: 1680px) {
 
@@ -164,18 +488,16 @@ input, select, textarea {
 		}
 
 	a {
-		-moz-transition: border-bottom-color 0.2s ease, color 0.2s ease;
-		-webkit-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		-ms-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		text-decoration: none;
-		color: #585858;
-		border-bottom: dotted 1px rgba(88, 88, 88, 0.5);
+		color: var(--main-colour);
 	}
 
 		a:hover {
 			border-bottom-color: transparent;
-			color: #808080 !important;
+			color: var(--accent-1);
+			opacity: 0.7;
 		}
 
 	strong, b {
@@ -191,11 +513,12 @@ input, select, textarea {
 	}
 
 	h1 {
+		font-family: var(--font-display);
 		font-size: 2.75em;
 		font-weight: 700;
 		line-height: 1.3;
 		margin: 0 0 1em 0;
-		letter-spacing: -0.035em;
+		letter-spacing: 0.5em;
 	}
 
 		h1 a {
@@ -220,9 +543,10 @@ input, select, textarea {
 		}
 
 	h2, h3, h4, h5, h6 {
+		font-family: var(--font-display);
 		font-weight: 900;
 		line-height: 1.5;
-		margin: 0 0 2em 0;
+		margin: 0 0 0 0;
 		text-transform: uppercase;
 		letter-spacing: 0.35em;
 	}
@@ -284,7 +608,7 @@ input, select, textarea {
 	}
 
 	blockquote {
-		border-left: solid 4px #c9c9c9;
+		border-left: 1.5px solid var(--border);
 		font-style: italic;
 		margin: 0 0 2em 0;
 		padding: 0.5em 0 0.5em 2em;
@@ -293,7 +617,7 @@ input, select, textarea {
 	code {
 		background: rgba(144, 144, 144, 0.075);
 		border-radius: 4px;
-		border: solid 1px #c9c9c9;
+		border: 1.5px solid var(--border);
 		font-family: "Courier New", monospace;
 		font-size: 0.9em;
 		margin: 0 0.25em;
@@ -316,7 +640,7 @@ input, select, textarea {
 
 	hr {
 		border: 0;
-		border-bottom: solid 1px #c9c9c9;
+		border-bottom: 1.5px solid var(--border);
 		margin: 2em 0;
 	}
 
@@ -1022,7 +1346,6 @@ input, select, textarea {
 				}
 
 					.row > * {
-						padding: 0 0 0 2em;
 					}
 
 					.row.gtr-uniform {
@@ -1865,13 +2188,14 @@ input, select, textarea {
 			-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 			background-color: transparent;
-			border: solid 1px #e7e7e7;
-			border-radius: 4px;
-			width: 2.65em;
-			height: 2.65em;
-			display: inline-block;
-			text-align: center;
-			line-height: 2.65em;
+			border: solid 1px var(--accent-1);
+			border-radius:50%;
+			width: 2.25em;
+			height: 2.25em;
+			display: flex;
+			justify-content: center; /* Horizontal */
+  			align-items: center;   
+			line-height: 3em;
 			color: inherit;
 		}
 
@@ -1881,11 +2205,11 @@ input, select, textarea {
 
 			.icon.style2:hover {
 				color: #dfdede;
-				border-color: #232323;
+				border-color: var(--border);
 			}
 
 			.icon.style2:active {
-				background-color: rgba(2, 79, 18, 0.3);
+				background-color: rgba(55, 58, 84, 0.3);
 			}
 
 /* List */
@@ -1901,42 +2225,12 @@ input, select, textarea {
 		}
 
 	ul {
-		list-style: disc;
-		margin: 0 0 2em 0;
-		padding-left: 1em;
+		list-style: none;
+		margin: 0;
 	}
 
 		ul li {
-			padding-left: 0.5em;
-		}
-
-		ul.alt {
-			list-style: none;
 			padding-left: 0;
-		}
-
-			ul.alt li {
-				border-top: solid 1px #c9c9c9;
-				padding: 0.5em 0;
-			}
-
-				ul.alt li:first-child {
-					border-top: 0;
-					padding-top: 0;
-				}
-
-	dl {
-		margin: 0 0 2em 0;
-	}
-
-		dl dt {
-			display: block;
-			font-weight: 900;
-			margin: 0 0 1em 0;
-		}
-
-		dl dd {
-			margin-left: 2em;
 		}
 
 /* Actions */
@@ -2171,7 +2465,7 @@ input, select, textarea {
 		background-color: transparent;
 		border: none;
 		border-radius: 0;
-		border-bottom: solid 1px #c9c9c9;
+		border-bottom: 1.5px solid var(--border);
 		color: inherit;
 		display: block;
 		outline: 0;
@@ -2195,8 +2489,7 @@ input, select, textarea {
 		input[type="tel"]:focus,
 		select:focus,
 		textarea:focus {
-			border-bottom-color: #808080;
-			box-shadow: inset 0 -1px 0 0 #808080;
+			border-bottom-color: var(--accent-2);
 		}
 
 	select {
@@ -2210,7 +2503,7 @@ input, select, textarea {
 	}
 
 		select option {
-			background: #e4dbf9;
+			background: var(--accent-1);
 		}
 
 		select:focus::-ms-value {
@@ -2277,7 +2570,7 @@ input, select, textarea {
 			input[type="checkbox"] + label:before,
 			input[type="radio"] + label:before {
 				border-radius: 4px;
-				border: solid 1px #c9c9c9;
+				border: 1.5px solid var(--border);
 				content: '';
 				display: inline-block;
 				font-size: 0.8em;
@@ -2292,16 +2585,15 @@ input, select, textarea {
 
 		input[type="checkbox"]:checked + label:before,
 		input[type="radio"]:checked + label:before {
-			background: #585858;
-			border-color: #585858;
-			color: #ffffff;
+			background: var(--accent-1);
+			border-color: var(--main-colour);
+			color: var(--cream);
 			content: '\f00c';
 		}
 
 		input[type="checkbox"]:focus + label:before,
 		input[type="radio"]:focus + label:before {
-			border-color: #808080;
-			box-shadow: 0 0 0 1px #808080;
+			border-color: var(--accent-2);
 		}
 
 	input[type="checkbox"] + label:before {
@@ -2311,42 +2603,6 @@ input, select, textarea {
 	input[type="radio"] + label:before {
 		border-radius: 100%;
 	}
-
-/* Box */
-
-	.box {
-		border-radius: 4px;
-		border: solid 1px #c9c9c9;
-		margin-bottom: 2em;
-		padding: 1.5em;
-	}
-
-		.box > :last-child,
-		.box > :last-child > :last-child,
-		.box > :last-child > :last-child > :last-child {
-			margin-bottom: 0;
-		}
-
-		.box.alt {
-			border: 0;
-			border-radius: 0;
-			padding: 0;
-		}
-
-		.box.alt .image.fit {
-			border-radius: 4px;
-			display: block;
-		}
-
-		.box.alt .image.fit img {
-			display: block;
-			width: 100%;
-			transition: transform 0.5s ease;
-		}
-
-		.box.alt .image.fit:hover img {
-			transform: scale(1.1);
-		}
 
 /* Image */
 
@@ -2360,26 +2616,6 @@ input, select, textarea {
 		.image img {
 			border-radius: 4px;
 			display: block;
-		}
-
-		.image.left, .image.right {
-			max-width: 40%;
-		}
-
-			.image.left img, .image.right img {
-				width: 100%;
-			}
-
-		.image.left {
-			float: left;
-			padding: 0 1.5em 1em 0;
-			top: 0.25em;
-		}
-
-		.image.right {
-			float: right;
-			padding: 0 0 1em 1.5em;
-			top: 0.25em;
 		}
 
 		.image.fit {
@@ -2408,73 +2644,6 @@ input, select, textarea {
 					margin: 0 0 2em 0;
 				}
 
-			}
-
-/* Table */
-
-	.table-wrapper {
-		-webkit-overflow-scrolling: touch;
-		overflow-x: auto;
-	}
-
-	table {
-		margin: 0 0 2em 0;
-		width: 100%;
-	}
-
-		table tbody tr {
-			border: solid 1px #c9c9c9;
-			border-left: 0;
-			border-right: 0;
-		}
-
-			table tbody tr:nth-child(2n + 1) {
-				background-color: rgba(144, 144, 144, 0.075);
-			}
-
-		table td {
-			padding: 0.75em 0.75em;
-		}
-
-		table th {
-			font-size: 0.9em;
-			font-weight: 900;
-			padding: 0 0.75em 0.75em 0.75em;
-			text-align: left;
-		}
-
-		table thead {
-			border-bottom: solid 2px #c9c9c9;
-		}
-
-		table tfoot {
-			border-top: solid 2px #c9c9c9;
-		}
-
-		table.alt {
-			border-collapse: separate;
-		}
-
-			table.alt tbody tr td {
-				border: solid 1px #c9c9c9;
-				border-left-width: 0;
-				border-top-width: 0;
-			}
-
-				table.alt tbody tr td:first-child {
-					border-left-width: 1px;
-				}
-
-			table.alt tbody tr:first-child td {
-				border-top-width: 1px;
-			}
-
-			table.alt thead {
-				border-bottom: 0;
-			}
-
-			table.alt tfoot {
-				border-top: 0;
 			}
 
 /* Button */
@@ -2603,6 +2772,26 @@ input, select, textarea {
 			opacity: 0.25;
 		}
 
+#main .inner > header {
+	display: flex;
+	align-items: baseline;
+	justify-content: flex-end;
+	gap: 4.25em;
+	margin: 0 0 2.5em 0;
+}
+
+.sw-icon img {
+	height: 1.25em;
+	width: auto;
+	display: block;
+}
+
+#main .inner > header h1 {
+	font-size: 1.5em;
+	transform: skewX(-13deg);
+	margin: 0;
+}
+
 /* Tiles */
 
 	.tiles {
@@ -2615,7 +2804,7 @@ input, select, textarea {
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 		position: relative;
-		margin: -2.5em 0 0 -2.5em;
+		margin: -1em 0 0 -1em;
 	}
 
 		.tiles article {
@@ -2624,20 +2813,25 @@ input, select, textarea {
 			-ms-transition: -ms-transform 0.5s ease, opacity 0.5s ease;
 			transition: transform 0.5s ease, opacity 0.5s ease;
 			position: relative;
-			width: calc(33.33333% - 2.5em);
-			margin: 2.5em 0 0 2.5em;
+			width: calc(33.33333% - 1em);
+			margin: 1em 0 0 1em;
+			border: 1.5px solid var(--border);
+			overflow: hidden;
+			padding: 1.25em;
+			box-sizing: border-box;
 		}
 
 			.tiles article > .image {
-				-moz-transition: -moz-transform 0.5s ease;
-				-webkit-transition: -webkit-transform 0.5s ease;
-				-ms-transition: -ms-transform 0.5s ease;
-				transition: transform 0.5s ease;
+				-moz-transition: -moz-transform 0.5s ease, filter 0.5s ease;
+				-webkit-transition: -webkit-transform 0.5s ease, filter 0.5s ease;
+				-ms-transition: -ms-transform 0.5s ease, filter 0.5s ease;
+				transition: transform 0.5s ease, filter 0.5s ease;
 				position: relative;
 				display: block;
 				width: 100%;
 				border-radius: 4px;
 				overflow: hidden;
+				filter: grayscale(0);
 			}
 
 				.tiles article > .image img {
@@ -2658,9 +2852,8 @@ input, select, textarea {
 					left: 0;
 					width: 100%;
 					height: 100%;
-					opacity: 1.0;
 					z-index: 1;
-					opacity: 0.65;
+					opacity: 0;
 				}
 
 				.tiles article > .image:after {
@@ -2705,14 +2898,15 @@ input, select, textarea {
 				-ms-transition: background-color 0.5s ease, -ms-transform 0.5s ease;
 				transition: background-color 0.5s ease, transform 0.5s ease;
 				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 70%;
+				height: 70%;
 				padding: 1em;
 				border-radius: 4px;
 				border-bottom: 0;
-				color: #ffffff;
+				color: var(--cream);
 				text-align: center;
 				text-decoration: none;
 				z-index: 3;
@@ -2722,23 +2916,32 @@ input, select, textarea {
 					margin: 0;
 				}
 
-			.tiles article > a:hover {
-					color: rgba(17, 8, 71, 0.65) !important;
-					background: rgba(223, 222, 222, 0.85);
+			body:not(.is-touch) .tiles article:hover > a {
+					color: var(--cream) !important;
+					background: rgba(30, 30, 30, 0.8);
+					opacity:1;
 				}
 
 			.tiles article > a h2 {
 				width: 100%;
 				margin: 0;
-				display: flex;
-    			justify-content: center;
-    			align-items: center;
+				display: block;
+				text-align: center;
+				font-family: var(--font-display);
+				font-weight: var(--fw-semi);
+				font-style: italic;
+				font-variant: normal;
+				clip-path: inset(0 50%);
+				transition: clip-path 0.5s ease;
+				font-size: 0.935em;
 			}
 
-			.tiles article > a h2 span {
+			.tiles article > a h2 > span {
 				position: relative;
 				display: inline-block;
-				padding-bottom: 6px;
+				text-align: center;
+				padding-bottom: 0.25em;
+				white-space: nowrap;
 			}
 
 			.tiles article > a h2 > span:after {
@@ -2748,13 +2951,17 @@ input, select, textarea {
 				left: 50%;
 				width: 0;
 				height: 1px;
-				background-color: #05025c;
+				background-color: var(--paper);
 				transition: width 0.5s ease, left 0.5s ease;
 			}
 
-			.tiles article > a:hover h2 span:after {
-				width: 120%;
-				left: -10%;
+			body:not(.is-touch) .tiles article:hover > a h2 {
+				clip-path: inset(0 -5%);
+			}
+
+			body:not(.is-touch) .tiles article:hover > a h2 span:after {
+				width: calc(100% + 1em);
+				left: -0.5em;
 			}
 
 				.tiles article > a .content {
@@ -2768,6 +2975,13 @@ input, select, textarea {
 					margin-top: 0.35em;
 					opacity: 0;
 				}
+
+					.tiles article > a .content p {
+						font-family: var(--font-body);
+						font-variant: small-caps;
+						font-style: normal;
+						font-size: 0.85em;
+					}
 
 					.tiles article > a .content > :last-child {
 						margin-bottom: 0;
@@ -2802,6 +3016,7 @@ input, select, textarea {
 				-webkit-transform: scale(1.1);
 				-ms-transform: scale(1.1);
 				transform: scale(1.1);
+				filter: grayscale(1);
 			}
 
 				body:not(.is-touch) .tiles article:hover > .image:before {
@@ -2821,8 +3036,17 @@ input, select, textarea {
 		* + .tiles {
 			margin-top: 2em;
 		}
+
+		.tiles-frame {
+			padding: 1.5em;
+			overflow: visible;
+		}
+
+
 		#long-title {
-		 max-width: 8em;
+			white-space: normal;
+			word-break: normal;
+			max-width: min-content;
 		}
 
 		body.is-preload .tiles article {
@@ -2833,7 +3057,20 @@ input, select, textarea {
 			opacity: 0;
 		}
 
-		body.is-touch .tiles article .content {
+		/* Touch: a tile reveals (grows + caption) only once tapped (.is-active);
+		   tapping it again follows the link, tapping elsewhere deactivates (JS). */
+		body.is-touch .tiles article.is-active > .image {
+			transform: scale(1.1);
+			filter: grayscale(1);
+		}
+		body.is-touch .tiles article.is-active > .image:before {
+			background-color: #333333;
+			opacity: 0.15;
+		}
+		body.is-touch .tiles article.is-active > .image:after {
+			opacity: 0;
+		}
+		body.is-touch .tiles article.is-active .content {
 			max-height: 15em;
 			opacity: 1;
 		}
@@ -2867,12 +3104,12 @@ input, select, textarea {
 		@media screen and (max-width: 736px) {
 
 			.tiles {
-				margin: -1.25em 0 0 -1.25em;
+				margin: -0.75em 0 0 -0.75em;
 			}
 
 				.tiles article {
-					width: calc(50% - 1.25em);
-					margin: 1.25em 0 0 1.25em;
+					width: calc(50% - 0.75em);
+					margin: 0.75em 0 0 0.75em;
 				}
 
 					.tiles article:hover > .image {
@@ -2900,329 +3137,324 @@ input, select, textarea {
 /* Header */
 
 	#header {
-		padding: 8em 0 0.1em 0 ;
+		padding: 3em 0 0 0;
+		display: inline-block;
+		width: 100%;
 	}
 
-		#header .logo {
-			display: block;
-			border-bottom: 0;
-			color: inherit;
-			font-weight: 900;
-			letter-spacing: 0.35em;
-			margin: 0 0 2.5em 0;
-			text-decoration: none;
-			text-transform: uppercase;
-			display: inline-block;
-		}
-
-			#header .logo > * {
-				display: inline-block;
-				vertical-align: middle;
-			}
-
-			#header .logo .symbol {
-				margin-right: 0.65em;
-			}
-
-				#header .logo .symbol img {
-					display: block;
-					width: 2em;
-					height: 2em;
+	#header .logo .symbol img {
+					display: flex;
+					width: 1.5em;
+					height: 1.5em;
+					align-items: center;
+					height:100%;
 				}
 
-		#header nav {
-			position: fixed;
-			right: 2em;
-			top: 2em;
-			z-index: 10000;
-		}
 
-			#header nav ul {
-				display: -moz-flex;
-				display: -webkit-flex;
-				display: -ms-flex;
-				display: flex;
-				-moz-align-items: center;
-				-webkit-align-items: center;
-				-ms-align-items: center;
-				align-items: center;
-				list-style: none;
-				margin: 0;
-				padding: 0;
-			}
-
-				#header nav ul li {
-					display: block;
-					padding: 0;
-				}
-
-					#header nav ul li a {
-						display: block;
-						position: relative;
-						height: 3em;
-						line-height: 3em;
-						padding: 0 1.5em;
-						background-color: rgba(255, 255, 255, 0.5);
-						border-radius: 4px;
-						border: 0;
-						font-size: 0.8em;
-						font-weight: 900;
-						letter-spacing: 0.35em;
-						text-transform: uppercase;
-					}
-
-					#header nav ul li a[href="#menu"] {
-						-webkit-tap-highlight-color: transparent;
-						width: 4em;
-						text-indent: 4em;
-						font-size: 1em;
-						overflow: hidden;
-						padding: 0;
-						white-space: nowrap;
-					}
-
-						#header nav ul li a[href="#menu"]:before, #header nav ul li a[href="#menu"]:after {
-							-moz-transition: opacity 0.2s ease;
-							-webkit-transition: opacity 0.2s ease;
-							-ms-transition: opacity 0.2s ease;
-							transition: opacity 0.2s ease;
-							content: '';
-							display: block;
-							position: absolute;
-							top: 0;
-							left: 0;
-							width: 100%;
-							height: 100%;
-							background-position: center;
-							background-repeat: no-repeat;
-							background-size: 2em 2em;
-						}
-
-						#header nav ul li a[href="#menu"]:before {
-							background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %23808080%3B %7D%3C/style%3E%3Cline x1='0' y1='25' x2='100' y2='25' /%3E%3Cline x1='0' y1='50' x2='100' y2='50' /%3E%3Cline x1='0' y1='75' x2='100' y2='75' /%3E%3C/svg%3E");
-							opacity: 0;
-						}
-
-						#header nav ul li a[href="#menu"]:after {
-							background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %23585858%3B %7D%3C/style%3E%3Cline x1='0' y1='25' x2='100' y2='25' /%3E%3Cline x1='0' y1='50' x2='100' y2='50' /%3E%3Cline x1='0' y1='75' x2='100' y2='75' /%3E%3C/svg%3E");
-							opacity: 1;
-						}
-
-						#header nav ul li a[href="#menu"]:hover:before {
-							opacity: 1;
-						}
-
-						#header nav ul li a[href="#menu"]:hover:after {
-							opacity: 0;
-						}
-
-		@media screen and (max-width: 736px) {
-
-			#header {
-				padding: 4em 0 0.1em 0 ;
-			}
-
-				#header nav {
-					right: 0.5em;
-					top: 0.5em;
-				}
-
-					#header nav ul li a[href="#menu"]:before, #header nav ul li a[href="#menu"]:after {
-						background-size: 1.5em 1.5em;
-					}
-
-		}
-
-/* Menu */
-
-	#wrapper {
-		-moz-transition: opacity 0.45s ease;
-		-webkit-transition: opacity 0.45s ease;
-		-ms-transition: opacity 0.45s ease;
-		transition: opacity 0.45s ease;
-		opacity: 1;
-	}
-
-	#menu {
-		-moz-transform: translateX(22em);
-		-webkit-transform: translateX(22em);
-		-ms-transform: translateX(22em);
-		transform: translateX(22em);
-		-moz-transition: -moz-transform 0.45s ease, visibility 0.45s;
-		-webkit-transition: -webkit-transform 0.45s ease, visibility 0.45s;
-		-ms-transition: -ms-transform 0.45s ease, visibility 0.45s;
-		transition: transform 0.45s ease, visibility 0.45s;
+		#navbar {
 		position: fixed;
 		top: 0;
-		right: 0;
-		width: 22em;
-		max-width: 80%;
+		left: 0;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 3.5em;
+		background: var(--cream);
+		z-index: 10000;
+		transition: opacity 0.5s ease;
+		border-bottom: 1.5px solid var(--border);
+	}
+
+	#navbar.faded {
+		opacity: 0;
+	}
+
+
+	#navbar a.logo {
+    margin: 0 0 0 4.5em;
+}
+
+	#navbar a:hover,
+	#navbar a:active {
+		color: var(--accent-1);
+	}
+
+
+	.nav-left {
+		display: flex;
+		align-items: center;
+		height:100%;
+	}
+
+	/* Text links as their own group; gap from the logo (logo stays put) */
+	.nav-left .nav-links {
+		display: flex;
+		align-items: center;
 		height: 100%;
-		-webkit-overflow-scrolling: touch;
-		background: #585858;
-		color: #ffffff;
-		cursor: default;
-		visibility: hidden;
-		z-index: 10002;
+		margin-left: 2.5em;
 	}
 
-		#menu > .inner {
-			-moz-transition: opacity 0.45s ease;
-			-webkit-transition: opacity 0.45s ease;
-			-ms-transition: opacity 0.45s ease;
-			transition: opacity 0.45s ease;
-			-webkit-overflow-scrolling: touch;
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			padding: 2.75em;
-			opacity: 0;
-			overflow-y: auto;
-		}
-
-			#menu > .inner > ul {
-				list-style: none;
-				margin: 0 0 1em 0;
-				padding: 0;
-			}
-
-				#menu > .inner > ul > li {
-					padding: 0;
-					border-top: solid 1px rgba(169, 166, 192, 0.25);
-				}
-
-					#menu > .inner > ul > li a {
-						display: block;
-						padding: 1em 0;
-						line-height: 1.5;
-						border: 0;
-						color: inherit;
-					}
-
-					#menu > .inner > ul > li:first-child {
-						border-top: 0;
-						margin-top: -1em;
-					}
-
-		#menu > .close {
-			-moz-transition: opacity 0.45s ease, -moz-transform 0.45s ease;
-			-webkit-transition: opacity 0.45s ease, -webkit-transform 0.45s ease;
-			-ms-transition: opacity 0.45s ease, -ms-transform 0.45s ease;
-			transition: opacity 0.45s ease, transform 0.45s ease;
-			-moz-transform: scale(0.25) rotate(180deg);
-			-webkit-transform: scale(0.25) rotate(180deg);
-			-ms-transform: scale(0.25) rotate(180deg);
-			transform: scale(0.25) rotate(180deg);
-			-webkit-tap-highlight-color: transparent;
-			display: block;
-			position: absolute;
-			top: 2em;
-			left: -6em;
-			width: 6em;
-			text-indent: 6em;
-			height: 3em;
-			border: 0;
-			font-size: 1em;
-			opacity: 0;
-			overflow: hidden;
-			padding: 0;
-			white-space: nowrap;
-		}
-
-			#menu > .close:before, #menu > .close:after {
-				-moz-transition: opacity 0.2s ease;
-				-webkit-transition: opacity 0.2s ease;
-				-ms-transition: opacity 0.2s ease;
-				transition: opacity 0.2s ease;
-				content: '';
-				display: block;
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background-position: center;
-				background-repeat: no-repeat;
-				background-size: 2em 2em;
-			}
-
-			#menu > .close:before {
-				background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %23808080%3B %7D%3C/style%3E%3Cline x1='15' y1='15' x2='85' y2='85' /%3E%3Cline x1='85' y1='15' x2='15' y2='85' /%3E%3C/svg%3E");
-				opacity: 0;
-			}
-
-			#menu > .close:after {
-				background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %23585858%3B %7D%3C/style%3E%3Cline x1='15' y1='15' x2='85' y2='85' /%3E%3Cline x1='85' y1='15' x2='15' y2='85' /%3E%3C/svg%3E");
-				opacity: 1;
-			}
-
-			#menu > .close:hover:before {
-				opacity: 1;
-			}
-
-			#menu > .close:hover:after {
-				opacity: 0;
-			}
-
-		@media screen and (max-width: 736px) {
-
-			#menu {
-				-moz-transform: translateX(16.5em);
-				-webkit-transform: translateX(16.5em);
-				-ms-transform: translateX(16.5em);
-				transform: translateX(16.5em);
-				width: 16.5em;
-			}
-
-				#menu > .inner {
-					padding: 2.75em 1.5em;
-				}
-
-				#menu > .close {
-					top: 0.5em;
-					left: -4.25em;
-					width: 4.25em;
-					text-indent: 4.25em;
-				}
-
-					#menu > .close:before, #menu > .close:after {
-						background-size: 1.5em 1.5em;
-					}
-
-		}
-
-	body.is-menu-visible #wrapper {
-		pointer-events: none;
-		cursor: default;
-		opacity: 0.25;
+	.nav-right {
+		display: flex;
+		/* Push the right text links in by 6em */
+		margin-right: 4em;
 	}
 
-	body.is-menu-visible #menu {
-		-moz-transform: translateX(0);
-		-webkit-transform: translateX(0);
-		-ms-transform: translateX(0);
-		transform: translateX(0);
-		visibility: visible;
-	}
 
-		body.is-menu-visible #menu > * {
-			opacity: 1;
-		}
-
-		body.is-menu-visible #menu .close {
-			-moz-transform: scale(1.0) rotate(0deg);
-			-webkit-transform: scale(1.0) rotate(0deg);
-			-ms-transform: scale(1.0) rotate(0deg);
-			transform: scale(1.0) rotate(0deg);
-			opacity: 1;
-		}
 
 /* Main */
 
-	#main {
-		padding: 0em 0 3em 0 ;
+	#indexhero {
+		position: relative;
+		overflow: visible;
+		background: none;
+		margin: 0 0 13.5em 0;
+		padding: 2.5em 0;
+	}
+
+	.indexhero-welcome {
+		min-height: 90vh;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		padding: 6.5em 10em 0 11em;
+		position: relative;
+		z-index: 2;
+	}
+
+	.welcome-intro {
+		font-family: var(--font-mono);
+		font-variant: normal;
+		font-size: 1em;
+		line-height: 1.9;
+		color: #000;
+	}
+
+	.intro-line {
+		display: block;
+		margin: 0;
+		white-space: nowrap;
+	}
+
+	.intro-line--indent {
+		padding-left: 3em;
+	}
+
+	/* Rotating word ("design" → textile → apparel …): slides up on entrance,
+	   then each word fades out/in. Width is auto, so the trailing text reflows
+	   when the word changes (while it's faded out). */
+	.design-word {
+		font-family: var(--font-mono);
+		font-size:0.975em;
+		font-weight: 700;
+		font-style: normal;
+		font-variant: small-caps;
+		display: inline-block;
+		text-align: center;              /* fixed width (set in JS) → word stays centred */
+		transform: translateY(0.85em);   /* start below — slides up via .is-in */
+		opacity: 0;
+		transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+		            opacity 0.3s ease;
+		will-change: transform, opacity;
+	}
+	.design-word.is-in  { transform: translateY(0.05em); opacity: 1; }
+	.design-word.is-out { opacity: 0; }   /* declared after .is-in so it wins while cycling */
+
+	.welcome-namelogo {
+		display: block;
+		width: 300px;
+		max-width: 100%;
+		margin-left: auto;
+		margin-top: 0.75em;
+		opacity: 0;
+		animation: idx-type-in 0.7s ease forwards;
+		animation-delay: 2.9s;
+	}
+
+	.intro-line .type-char {
+		opacity: 0;
+		display: inline-block;
+	}
+
+	#welcome-heading {
+		font-size: 1rem;
+	}
+
+	.welcome-letter {
+		display: inline-block;
+		overflow: hidden;
+		vertical-align: bottom;
+	}
+
+	.welcome-letter-inner {
+		display: inline-block;
+		transform: translateX(110%);
+		animation: welcomeLetterSlide 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	}
+
+	.welcome-letter-inner-right {
+		display: inline-block;
+		transform: translateX(110%);
+		animation: welcomeLetterSlideRight 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		animation-play-state: paused;
+	}
+
+	.welcome-letter-inner-right.is-playing {
+		animation-play-state: running;
+	}
+
+	@keyframes welcomeLetterSlide {
+		to { transform: translateX(0); }
+	}
+
+	@keyframes welcomeLetterSlideRight {
+		to { transform: translateX(0); }
+	}
+
+
+	/* ── Vertical conveyor hero: one static frame, two cards ride up through it ──
+	   Replaces the old horizontal slide-in panels. The frame is a pinned, clipped
+	   window; the cards (each = a text+image pair) are scrubbed vertically by scroll
+	   (JS sets --cardY). A card rises to dead centre, knocks (tilts), dwells, then
+	   exits up as the next rises in. */
+
+
+	/* Two boxes (text + image) side by side with a cream gap = the frame padding;
+	   each box has its own paper fill (no shared bg, no divider). */
+	.panel-inner {
+		display: flex;
+		gap: 3em;
+	}
+
+	/* Tall stage = the scroll budget while the frame is pinned. JS scrubs each
+	   card's --cardY across this range. Tune height to lengthen/shorten the whole
+	   enter→dwell→exit→enter→dwell sequence. */
+	.index-page .panel-stage {
+		position: relative;
+		height: 360vh;
+	}
+
+	/* The static window: pinned, cream + border, clips the cards as they travel.
+	   JS sets `height` = card height + 2.5em padding and the matching centred `top`
+	   (so the frame hugs the card with the previous panel's padding). */
+	.index-page .static-frame {
+		position: sticky;
+		top: 20vh;                 /* pre-JS fallback; JS overrides once measured */
+		box-sizing: border-box;
+		background: var(--cream);
+		border: 1.5px solid var(--border);
+		overflow: hidden;
+		z-index: 2;
+	}
+
+	/* Each card is absolutely centred at its NATURAL size (so the image keeps its
+	   previous dimensions); the frame is sized around it for a uniform 2.5em pad.
+	   JS drives --cardY (px): +down / −up. Default far below so nothing flashes
+	   before the controller runs. */
+	.index-page .static-frame .card {
+		position: absolute;
+		top: 50%;
+		left: 2.5em;
+		right: 2.5em;
+		transform: translateY(calc(-50% + var(--cardY, 1200px)));
+		will-change: transform;
+	}
+
+	/* Card 2 keeps its holes on the right. */
+	.index-page .card-2 .panel-holes-strip {
+		order: 2;
+		border-right: none;
+		border-left: 1.5px solid var(--border);
+	}
+
+	/* Image box — its own paper fill, equal padding all sides (no divider) */
+	.panel-card-image {
+		padding: 1.5em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		background: var(--paper);
+	}
+
+	.panel-img {
+		/* 280×345, locked aspect ratio (no height-stretch). In rem so it stays a
+		   constant size across all desktop widths (unaffected by the 14pt body zone),
+		   then shrinks with the html font-size below `stack`. flex-shrink:0 on the
+		   image box means only the copy column narrows above the stack breakpoint. */
+		width: 17.5rem;
+		height: 21.5625rem;
+		object-fit: cover;
+		display: block;
+	}
+
+	/* Text section — horizontal: [holes strip] [content rows] */
+	.panel-card-text {
+		flex: 1;
+		display: flex;
+		flex-direction: row;
+		background: var(--paper);
+	}
+
+	/* Punch holes — vertical strip on the edge opposite the image */
+	.panel-holes-strip {
+		flex-shrink: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-evenly;
+		padding: 0 1.5em;
+		border-right: 1.5px solid var(--border);
+	}
+
+	.panel-hole {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: var(--cream);
+		box-shadow: inset 0 2px 6px rgba(0,0,0,0.28), 0 1px 2px rgba(0,0,0,0.12);
+		flex-shrink: 0;
+	}
+
+	/* Text content column — rows stacked inside the text section */
+	.panel-card-content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.panel-card-heading {
+		display: flex;
+		align-items: center;
+		padding: 1.25em 2em;
+		border-bottom: 1.5px solid var(--border);
+	}
+
+	.panel-card-heading h2 {
+		font-size: 2.25em;
+		margin: 0;
+		color: var(--main-colour);
+		/* keep the heading on one line so the inline-block "m" in "manifesto"
+		   can't break "anifesto" onto a new line as the column narrows */
+		white-space: nowrap;
+	}
+
+	/* The "m" in "manifesto": Adelphe Bold, slight shear, 0.5px stroke. */
+	.panel-card-heading h2 .heading-m {
+		font-weight: var(--fw-bold);
+		font-style: normal;
+		display: inline-block;
+		transform: skewX(-10deg);
+		-webkit-text-stroke-width: 0.475px;
+	}
+
+	.panel-card-copy {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
 	}
 
 		@media screen and (max-width: 736px) {
@@ -3231,186 +3463,1777 @@ input, select, textarea {
 				padding: 0em 0 1em 0 ;
 			}
 
+			.index-page #indexhero,
+			.index-page #index-works {
+				padding-left: 1.5em;
+				padding-right: 1.5em;
+			}
+
 		}
 
-		#main .inner {
-			padding: 1em 0 1em 0;
-		}
+
+		
+
 
 /* Footer */
 
-	#footer {
-		padding: 5em 0 6em 0 ;
-		background-color: #7f7f82;
-	}
+#footer {
+	--bar-h: 2.75rem;
+    background: var(--paper);
+    /* Gutter lives on #footer > .inner (single --pad-x) — keep outer horizontal 0
+       so non-index pages don't double it via the #wrapper > * > .inner rule. */
+    padding: 0.8rem 0 0.75rem;
+    box-sizing: border-box;
+    height: auto;
+    overflow: visible;
+}
 
-		#footer > .inner {
-			display: -moz-flex;
-			display: -webkit-flex;
-			display: -ms-flex;
-			display: flex;
-			-moz-flex-wrap: wrap;
-			-webkit-flex-wrap: wrap;
-			-ms-flex-wrap: wrap;
-			flex-wrap: wrap;
-			-moz-flex-direction: row;
-			-webkit-flex-direction: row;
-			-ms-flex-direction: row;
-			flex-direction: row;
-		}
+#footer > .inner {
+    max-width: none;
+    margin: 0;
+    padding: 0 var(--pad-x);
+    display: flex;
+    flex-direction: column;
+}
 
-			#footer > .inner > * > :last-child {
-				margin-bottom: 0;
-			}
+.footer-bar {
+    height: var(--bar-h);
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--border);
+    padding: 0 0.2em 0 1.15rem;
+}
 
-			#footer > .inner section:nth-child(1) {
-				width: calc(66% - 2.5em);
-				margin-right: 2.5em;
-			}
+#footer .social-links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 100%;
+    flex: 0 0 auto;   /* fixed at its content width → the reel (flex:1) shrinks instead */
+}
 
-			#footer > .inner section:nth-child(2) {
-				width: calc(33% - 2.5em);
-				margin-left: 2.5em;
-			}
+.footer-label,
+.collaborate-text {
+    color: var(--main-colour);
+    font-size: 0.9em;
+    font-weight: inherit;
+}
 
-			#footer > .inner .copyright {
-				width: 100%;
-				padding: 0;
-				margin-top: 5em;
-				list-style: none;
-				font-size: 0.8em;
-				color: rgba(255, 255, 255, 0.5);
-			}
+#footer ul.icons {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0 0 0 5rem;
+    padding: 0 0.65rem 0 0.65rem;
+    gap: 0.5rem;
+	font-size: 9pt;
+}
 
-				#footer > .inner .copyright a {
-					color: inherit;
-				}
+#footer ul.icons li {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
 
-				#footer > .inner .copyright li {
-					display: inline-block;
-					border-left: solid 1px rgba(250, 250, 250, 0.15);
-					line-height: 1;
-					padding: 0 0 0 1em;
-					margin: 0 0 0 1em;
-				}
+.footer-divider {
+    width: 1.25px;
+    align-self: stretch;
+    background: var(--border);
+    flex-shrink: 0;
+    margin: 0 0.2em 0 1.25rem;
+}
 
-					#footer > .inner .copyright li:first-child {
-						border-left: 0;
-						padding-left: 0;
-						margin-left: 0;
-					}
+#footer .collaborate-section {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin-left: auto;
+}
 
-		@media screen and (max-width: 1280px) {
+.collaborate-text {
+    margin-left: 0;
+    transition: margin-left 0.5s ease;
+}
 
-			#footer {
-				padding: 5em 0 3em 0 ;
-			}
+.inquire-link {
+    order: -1;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    color: var(--main-colour);
+    text-decoration: underline;
+}
 
-				#footer > .inner section:nth-child(1) {
-					width: calc(66% - 1.25em);
-					margin-right: 1.25em;
-				}
+.inquire-link:hover {
+    color: var(--accent-1);
+}
 
-				#footer > .inner section:nth-child(2) {
-					width: calc(33% - 1.25em);
-					margin-left: 1.25em;
-				}
+.collaborate-section:hover .collaborate-text {
+    margin-left: 1em;
+}
 
-		}
+.collaborate-section:hover .inquire-link {
+    opacity: 1;
+    transform: translateX(0);
+}
 
-		@media screen and (max-width: 980px) {
 
-			#footer > .inner section:nth-child(1) {
-				width: 66%;
-				margin-right: 0;
-			}
+#footer > .inner .copyright {
+    margin-top: 0.75em;
+    width: 100%;
+    box-sizing: border-box;
+    color: var(--accent-1);
+    padding: 0 0.75em;
+    list-style: none;
+    font-size: 9pt;
+    line-height: 1;
+    font-variant: small-caps;
+    display: flex;
+    justify-content: space-between;
+}
 
-			#footer > .inner section:nth-child(2) {
-				width: calc(33% - 2.5em);
-				margin-left: 2.5em;
-			}
+#footer > .inner .copyright a {
+    color: inherit;
+}
 
-		}
+#footer > .inner .copyright a:hover {
+    color: var(--paper);
+}
 
-		@media screen and (max-width: 736px) {
-
-			#footer {
-				padding: 3em 0 1em 0 ;
-			}
-
-				#footer > .inner {
-					-moz-flex-direction: column;
-					-webkit-flex-direction: column;
-					-ms-flex-direction: column;
-					flex-direction: column;
-				}
-
-					#footer > .inner section:nth-child(1) {
-						width: 100%;
-						margin-right: 0;
-						margin: 3em 0 0 0;
-					}
-
-					#footer > .inner section:nth-child(2) {
-						-moz-order: -1;
-						-webkit-order: -1;
-						-ms-order: -1;
-						order: -1;
-						width: 100%;
-						margin-left: 0;
-					}
-
-					#footer > .inner .copyright {
-						margin-top: 3em;
-					}
-
-		}
-
-		@media screen and (max-width: 480px) {
-
-			#footer > .inner .copyright {
-				margin-top: 3em;
-			}
-
-				#footer > .inner .copyright li {
-					border-left: 0;
-					padding-left: 0;
-					margin: 0.75em 0 0 0;
-					display: block;
-					line-height: inherit;
-				}
-
-					#footer > .inner .copyright li:first-child {
-						margin-top: 0;
-					}
-					
-
-		}
-
+#footer > .inner .copyright li {
+    display: block;
+}
 		.footer-form input,
 		.footer-form textarea {
 			color: inherit;
-			border-bottom-color: #ffffff;
+			border-bottom-color: var(--accent-1);
 		}
+
+		.footer-form select {
+			color: var(--accent-1);
+			border-bottom-color: var(--accent-1);
+		}
+		.footer-form select:focus{
+			color: var(--cream);
+		}		
 
 		.footer-form input::placeholder,
 		.footer-form textarea::placeholder {
-			color: rgba(255, 255, 255, 0.4);
+			color: var(--accent-1);
+			font-variant: small-caps;
 		}
-		
+		.footer-form label{
+			color: var(--accent-1) !important;
+		}
+
 /* Wrapper */
 
+	/* Unified gutter: full-width content with a single --pad-x left/right gutter
+	   (no 68em cap), matching the index layers. Header is unaffected (navbar is
+	   position:fixed); footer has its own --pad-x rule below. */
 	#wrapper > * > .inner {
 		width: 100%;
-		max-width: 68em;
-		margin: 0 auto;
-		padding: 0 2.5em;
+		max-width: none;
+		margin: 0;
+		padding-left: var(--pad-x);
+		padding-right: var(--pad-x);
 	}
+/* Project gallery layout */
+#image-modal {
+    display: flex;
+    position: fixed;
+    z-index: 10003;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    gap: 1.1em;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 30, 30, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
 
-		@media screen and (max-width: 736px) {
+#image-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
 
-			#wrapper > * > .inner {
-				padding: 0 1.25em;
-			}
+#wrapper {
+    transition: filter 0.4s ease, opacity 0.4s ease;
+}
 
-		}
+body.modal-open #wrapper {
+    filter: grayscale(1);
+    opacity: 0.45;
+}
+
+.modal-image-wrapper {
+    position: relative;
+    max-width: 95vw;
+    max-height: 86vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#image-modal .modal-content {
+    max-width: 100%;
+    max-height: 86vh;
+    width: auto;
+    height: auto;
+    display: block;
+    cursor: none;
+}
+
+/* Gallery nav — round buttons below the zoomed image */
+.modal-nav {
+    display: flex;
+    gap: 1em;
+    z-index: 1;
+}
+.modal-nav-btn {
+    width: 2.6em;
+    height: 2.6em;
+    border: none;
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.modal-nav-btn:hover {
+    background: var(--accent-1);
+    color: var(--cream);
+}
+
+/* Close button*/
+#image-modal .close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: white;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    z-index: 1;
+}
+
+/* Magnifier window */
+.magnifier {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border: 2px solid white;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    display: none;
+    z-index: 100001;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
+}
+
+
+.content-right #hero {
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    margin: 0 0 50vh 0;
+}
+
+.main-grid {
+    --preview-w: max(220px, 20%);
+    display: grid;
+    grid-template-columns: var(--preview-w) 1fr;
+    column-gap: 1.5rem;
+    align-items: stretch;
+}
+
+.preview-column {
+    position: relative;
+    z-index: 3;
+}
+
+.content-right {
+    min-width: 0;
+}
+
+.title-section {
+    height: 83.5vh;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    padding-right: 3em;
+    background: var(--cream);
+    border: 1.5px solid var(--border);border-bottom: none;
+    margin: 1em 0 0 0;
+}
+
+.title-section h1,
+.title-section h2 {
+    text-align: right;
+}
+
+.title-section h1 {
+    margin: 0 -0.5em 0.2em 0;
+    font-weight: var(--fw-semi);
+    font-style: italic;
+}
+
+.title-section h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-style: normal;
+    font-variant: normal;
+    -webkit-text-fill-color: var(--ink);
+    -webkit-text-stroke: 0;
+}
+
+/* Notation on the title card — Compagnon Medium, pinned to the left edge:
+   date in the upper-left corner, the project credit in the lower-left. */
+.title-date,
+.title-credit {
+    position: absolute;
+    left: 1.75em;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.7em;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+}
+.title-date   { top: 1.75em; }
+.title-credit { bottom: 1.75em; }
+
+.preview-mask {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.preview-scroll {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+
+.preview-scroll:hover {
+    scrollbar-width: none;
+}
+
+.preview-ticker {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.preview-scroll::-webkit-scrollbar {
+    width: 0;
+}
+
+.preview-track {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.preview-track img {
+    /* Vertical reel: inset ~4% each side so a 1.075 hover-grow stays inside the
+       column (the mask clips L/R) and the rounded corners never get cut. */
+    width: 92%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    border-radius: 0.35em;
+    -webkit-tap-highlight-color: transparent;   /* no grey flash on tap (mobile) */
+    transition: transform 0.25s ease;
+}
+
+/* Growth only — no grey outline, no drop shadow, no focus ring (desktop + mobile);
+   border-radius scales with the transform so corners stay rounded. */
+.preview-track img:hover,
+.preview-track img:focus {
+    transform: scale(1.075);   /* vertical reel */
+    outline: none;
+    position: relative;
+    z-index: 2;            /* grow over neighbours instead of being clipped behind */
+}
+
+.hero-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    position: relative;
+}
+
+
+.hero-panel .image-container {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.zoom-badge {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    background: rgba(0, 0, 0, 0.25);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1rem;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.zoom-badge i {
+    color: #fff;
+}
+
+#hero-main {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(100vh - 4em);
+    border: 2px solid #fff;
+    transition: opacity 0.3s ease;
+}
+
+.page-copy {
+    position: relative;
+    z-index: 3;
+    background: var(--cream);
+    padding: 4em;
+    border: 1.5px solid var(--border);
+    min-height: 144vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.copy-bg-frame {
+    flex: 1;
+    min-height: calc(144vh - 8em);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper); 
+}
+
+.copy-bg-image {
+    display: none;   /* plain colour fill on .page-copy — no image */
+}
+
+.copy-content {
+    position: relative;
+    z-index: 1;
+    padding: 3em;
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.copy-text-block {
+    width: 100%;
+}
+
+.copy-text-inner {
+    padding: 0 1.25em;
+}
+
+.page-ornament {
+    display: block;
+    width: 100%;
+    height: 2.2em;
+    object-fit: fill;
+    margin-bottom: 2em;
+    /* TEMP placeholder: ornament.svg has internal whitespace, so its visible
+       artwork doesn't reach the element's bottom edge — which threw off the
+       logo centring. Override the image with a transparent pixel and fill the
+       full element box (with a crisp border) so the visible edge == the
+       element edge. Replace with a real full-bleed ornament later (remove the
+       `content` / `background` / `border` lines). */
+    content: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1'%20height='1'%3E%3C/svg%3E");
+    background: var(--paper);
+    border: 1px solid var(--border);
+    box-sizing: border-box;
+}
+
+.page-ornament ~ .page-ornament {
+    margin-bottom: 0;
+}
+
+.page-logo-fill {
+    display: none;
+    height: 4em;
+    width: auto;
+}
+
+.copy-bg-frame.has-logo .page-logo-fill {
+    display: block;
+}
+
+/* When the logo fill shows (short copy), anchor the copy at the top so the
+   logo can be centred in the whitespace below it (margin set in JS). */
+.copy-bg-frame.has-logo .copy-content {
+    justify-content: flex-start;
+}
+
+.page-copy p {
+    font-size: 0.9em;
+    line-height: 2.2;
+    letter-spacing: 0.025em;
+    margin-bottom: 2em;
+}
+
+
+#main {
+    padding: 0 0 1em 0;
+}
+
+/* Shared sticky containing block for the parallax stack — must stay
+   overflow:visible so it does not become the sticky scrollport. No side
+   padding here; each layer carries its own (CTA/footer go full-width). */
+.index-page #main {
+	padding: 0;
+    overflow: visible;
+}
+
+/* ── Archive page (past-work): index-style tiles, no title card / text ───── */
+.archive-page #main {
+    /* top/bottom gaps ≈ the inter-tile gap (1em); sides via --pad-x. The fixed
+       navbar fades the instant scrolling starts, so the small top gap is never covered. */
+    padding: 1em var(--pad-x);
+    max-width: none;
+}
+/* fade the navbar quickly so it clears before tiles scroll up to it */
+.archive-page #navbar {
+    transition: opacity 0.2s ease;
+}
+.archive-tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin: 0;
+}
+.archive-tiles article {
+    width: calc((100% - 2em) / 3);   /* 3 columns with 1em gaps */
+    border: 1.5px solid var(--border);
+    padding: 1.25em;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.archive-tiles article > a {
+    display: block;
+    border-bottom: 0;
+}
+.archive-tiles .image {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    filter: grayscale(0);
+    transition: filter 0.5s ease, transform 0.5s ease;
+}
+.archive-tiles .image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+/* Hover: plain greyscale (default contrast), matching the index tiles' filter,
+   and scale the whole .image box (like index) so it grows outward toward the
+   border. No overlay — blacks stay black. */
+body:not(.is-touch) .archive-tiles article:hover .image {
+    filter: grayscale(1) ;
+    transform: scale(1.1);
+}
+/* Touch: tap to activate (grow), tap again to follow (JS). */
+body.is-touch .archive-tiles article.is-active .image {
+    filter: grayscale(1);
+    transform: scale(1.1);
+}
+body:not(.is-touch) .archive-tiles a:hover {
+	opacity: 1;
+}
+
+/* Footer gutter now comes from the unified #footer > .inner rule (--pad-x). */
+
+/* ── Parallax "covering" stack: ascending z-index, top set by JS ── */
+.index-page #indexhero {
+    position: sticky;
+    z-index: 1;
+    overflow-x: clip;            /* contains panels' translateX(±100%) */
+    padding-left: var(--pad-x);
+    padding-right: var(--pad-x);
+}
+.index-page #index-works {
+    position: sticky;
+    z-index: 2;
+    /* Override the #wrapper > * > .inner 68em cap: the layer must be
+       full-width so its opaque bg + border cover the hero edge-to-edge.
+       Content is inset 6em (single inset — matches CTA + footer). */
+    max-width: none;
+    /* No bottom margin: a sticky element's own bottom margin shortens its pin
+       range (Works would release early, before the CTA finishes covering). The
+       Works→CTA dwell is created by the CTA's margin-top instead. */
+    margin: 0;
+    padding-left: var(--pad-x);
+    padding-right: var(--pad-x);
+    background: var(--cream);                           /* opaque — must cover hero */
+    border-top: 1.5px solid var(--main-colour);   /* marks Works-covers-Hero */
+}
+.index-page #cta-footer-section {
+    position: sticky;
+    top: 0;                                            /* rises to top:0, fully covering Works */
+    z-index: 3;
+    /* Dwell: the gap before the CTA enters = how long Works' tail stays shown.
+       Kept here (not on Works' margin-bottom) so it doesn't shorten Works' pin
+       range — Works stays frozen until the CTA has fully covered it. */
+    margin-top: 55vh;
+    /* Fill the viewport so the section pins at top:0 and fully covers Works, with
+       the footer at the very bottom and NO scrollable gap beneath it. The extra
+       height (vs the cards+footer content) is taken up ABOVE the cards via
+       #index-cta's auto top margin — the footer and the footer↔grid gap are
+       untouched. */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--cream);                           /* opaque — must cover works */
+    border-top: 1.5px solid var(--main-colour);   /* marks CTA-covers-Works */
+}
+
+/* Breathing room above the Selected Works header — matches the gap below it
+   (header margin-bottom 2.5em + tiles-frame padding-top 1.5em = 4em). */
+.index-page #index-works > header {
+    margin-top: 4em;
+}
+
+.index-page .tiles-frame {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.content-right > h1 {
+    text-align: right;
+    margin: 0;
+    padding: 3.5em 0 0.2em 0;
+    line-height: 1;
+}
+
+/* ── Index page typography ─────────────────────────────────────────────── */
+
+@keyframes idx-type-in { to { opacity: 1; } }
+@keyframes idx-cursor-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* Selected works — Adelphe SemiBold Italic */
+#selected-works-heading {
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-style: normal;
+    font-variant: normal;
+    -webkit-text-fill-color: var(--ink);
+    -webkit-text-stroke: 0;
+}
+#selected-works-heading .type-char {
+    opacity: 0;
+}
+
+/* Navigation — Compagnon Medium (site-wide) */
+#navbar a {
+    font-family: var(--font-mono);
+    font-variant: normal;
+    letter-spacing: 0.15em;
+    font-size: 0.72em;
+	text-decoration: none;
+    margin: 0 1em;
+    text-transform: uppercase;
+    align-items: center;
+    border-bottom: none
+	
+}
+
+
+
+/* Panel card typography */
+.index-page .panel-card-heading h2 {
+    font-family: var(--font-display);
+    font-weight: var(--fw-semi);
+    font-style: italic;
+    font-variant: normal;
+    text-transform: uppercase;
+}
+.index-page .copy-grid-col-text p {
+    font-family: var(--font-body);
+    font-weight: normal;
+    font-style: normal;
+    font-variant: small-caps;
+}
+
+/* CTA */
+.index-page .cta-heading h2 {
+    font-family: var(--font-display);
+    font-weight: var(--fw-semi);
+    font-style: italic;
+    font-variant: normal;
+}
+.index-page .cta-copy p {
+    font-family: var(--font-body);
+    font-weight: normal;
+    font-style: normal;
+    font-variant: small-caps;
+}
+
+/* Copyright + collab reel — Compagnon Medium (site-wide) */
+#footer > .inner .copyright {
+    font-family: var(--font-mono);
+    font-variant: normal;
+}
+.reel-track {
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-style: italic;                 /* real Adelphe Bold Italic face */
+    font-variant: normal;
+    color: transparent;
+    -webkit-text-fill-color: transparent;   /* hollow letters … */
+    -webkit-text-stroke: 0.45px var(--main-colour);   /* … with a black outline */
+}
+
+/* The Adelphe italic "m"/"M" glyph glitches in outline mode, so render it as the
+   upright bold face skewed −10° instead — same treatment as the "m" in "manifesto"
+   on the index panel cards. Used by the footer reel (JS-tagged) and by project
+   titles that contain an M (e.g. KHOKLOMA, AUTUMN SONG). */
+.skew-m {
+    font-style: normal;           /* upright face avoids the glitchy italic glyph */
+    transform: skewX(-13deg);     /* faux-italic slant to match the rest */
+    display: inline-block;
+    /* weight inherits: bold in the (bold) reel — matching the manifesto m — and
+       semibold in the project titles, so each M matches its surroundings */
+}
+
+/* ── Index page footer ─────────────────────────────────────────────────── */
+
+/* Release the global height lock so the CTA + footer can breathe */
+.index-page #footer {
+    height: auto;
+    overflow: visible;
+}
+
+/* Footer gutter now comes from the unified #footer > .inner rule (--pad-x). */
+
+/* CTA section — two notation cards side-by-side + button below */
+#index-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* auto top margin absorbs the section's extra height ABOVE the cards, so the
+       footer sits at the very bottom and the footer↔grid gap is preserved. */
+    margin-top: auto;
+    min-height: 80vh;
+    padding: 6em var(--pad-x) 2.65em var(--pad-x);
+    gap: 2.5em;
+}
+
+/* Cards row — horizontal flex container.
+   width:100% so it fills #index-cta's 6em-padded box (edges align with
+   Works + footer) instead of shrink-centering. */
+.cta-cards-row {
+    display: flex;
+    align-items: stretch;
+    gap: 2em;
+    width: 100%;
+}
+
+/* Text card + button column */
+.cta-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Cards container — horizontal side-by-side */
+.cta-cards-row > .cta-card {
+    display: flex;
+    align-items: stretch;
+    background: var(--cream);          /* frame fill — paper "bed" sits inside */
+    border: 1.5px solid var(--border);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.cta-cards-row .cta-card + .cta-card {
+    margin-left: -1.5px;
+}
+
+/* Image card — cream frame; the paper "bed" (with the photo) sits inside with an
+   equal gap to the border, and tilts in stop-motion. */
+.cta-photo-card {
+    /* 360×360, in rem so the image + paper bed stay a constant size across desktop
+       (unaffected by the 14pt body zone), then shrink with the html font-size below
+       `stack`. flex-shrink:0 → only the text card narrows above the stack breakpoint. */
+    width: 22.5rem;
+    min-height: 22.5rem;
+    padding: 2.5em;            /* cream gap around the bed = tilt clearance */
+    display: flex;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.cta-photo-bed {
+    flex: 1;
+    background: var(--paper);
+    padding: 1.55em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+    animation: cta-tilt 2.4s steps(1, end) infinite;
+}
+
+.cta-photo-bed img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* Stop-motion tilt: tilt → 0 → -tilt, hard jumps (no easing) */
+@keyframes cta-tilt {
+    0%   { transform: rotate(0.8deg); }
+    25%  { transform: rotate(0deg); }
+    50%  { transform: rotate(-0.8deg); }
+    75%  { transform: rotate(0deg); }
+    100% { transform: rotate(0.8deg); }
+}
+
+/* Text card — cream frame; paper "bed" (holes + heading + copy) sits inside */
+.cta-text-card {
+    flex: 1;
+    display: flex;
+    padding: 1.5em;
+	border: 1px solid var(--ink);            /* cream gap around the bed */
+}
+
+.cta-text-bed {
+    flex: 1;
+    display: flex;
+    background: var(--paper);
+}
+
+.cta-label {
+    font-size: 0.82em;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+    margin-right: 0.35em;
+}
+
+/* Punch holes strip */
+.cta-holes-strip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0 1.5em;
+    flex-shrink: 0;
+}
+
+.cta-hole {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--cream);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.28), 0 1px 2px rgba(0,0,0,0.12);
+    flex-shrink: 0;
+}
+
+/* Text content rows */
+.cta-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-left: 1.5px solid var(--border);
+}
+
+.cta-heading {
+    display: flex;
+    align-items: center;
+    padding: 1.25em 1.5em;
+    border-bottom: 1.5px solid var(--border);
+}
+
+.cta-heading h2 {
+    font-size: 1.6em;
+    margin: 0;
+    color: var(--main-colour);
+}
+
+.cta-copy {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.copy-grid-row {
+    display: flex;
+    padding: 1.25em 1.5em;
+    border-bottom: 1.5px solid var(--main-colour);
+    align-items: center;
+}
+
+.copy-grid-row:last-child {
+    border-bottom: none;
+}
+
+.copy-grid-col-text {
+    display: flex;
+    align-items: center;
+}
+
+.copy-grid-col-text p {
+    font-family: var(--font-body);
+    font-size: 0.95em;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--main-colour);
+    font-variant: small-caps;
+}
+
+/* Button below text card */
+.cta-column .index-cta-link {
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75em;
+    font-family: var(--font-mono);
+    font-variant: normal;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid currentColor;
+    padding: 0.9em 2.5em;
+    margin-top: 1.5em;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+@keyframes LinkPulse {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+@keyframes LinkPulsein {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(0.98); }
+    100% { transform: scale(1); }
+}
+
+/* Shared button hover motion — mimics the CTA image's stop-motion tilt
+   (tilt → 0 → −tilt), sped up 1.5× (2.4s → 1.6s). Used by the index CTA button
+   AND the contact form buttons. */
+@keyframes btn-tilt {
+    0%   { transform: rotate(0.8deg); }
+    25%  { transform: rotate(0deg); }
+    50%  { transform: rotate(-0.8deg); }
+    75%  { transform: rotate(0deg); }
+    100% { transform: rotate(0.8deg); }
+}
+
+.index-cta-link:hover,
+.index-cta-link:active {
+    background: var(--accent-1);
+    color: var(--cream);
+    border-color: var(--border);
+	opacity: 1;
+}
+@media (hover: hover) {
+    .index-cta-link:hover {
+        animation: btn-tilt 1.6s steps(1, end) infinite;
+    }
+}
+
+
+/* Footer: hide label, icons flush left (site-wide) */
+#footer .footer-label {
+    display: none;
+}
+
+#footer ul.icons {
+    margin-left: 0;
+}
+
+#footer .icon.style2 {
+    line-height: 1;
+}
+
+#footer .icon.style2:hover {
+    color: inherit !important;
+    opacity: 1 !important;
+}
+
+#footer .social-links {
+    flex: 0.31;
+    justify-content: center;
+}
+
+#footer ul.icons {
+    gap: 2rem;
+}
+
+/* Copyright: bordered on left, right, bottom (top shared with footer-bar border) */
+#footer > .inner > .copyright {
+    border: 1.5px solid var(--border);
+    border-top: none;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-top: 0;
+}
+
+/* Icon hover pulse — fires once on hover, scales glyph only (not the border) */
+@keyframes IconPulse {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+#footer .icons li a {
+    display: flex;
+}
+
+@media (hover: hover) {
+    #footer .icons li a:hover::before {
+        animation: IconPulse 0.5s ease-out forwards;
+    }
+}
+
+/* Collab reel */
+.collab-reel {
+    overflow: hidden;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.reel-track,
+.reel-track:link,
+.reel-track:visited,
+.reel-track:hover {
+    display: inline-flex;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    color: var(--main-colour);
+    /* Shrunk a further 25% (2.05rem → 1.54rem). The bar height (--bar-h) is fixed,
+       so the border box stays the same; the padding-top is scaled by the same 0.75
+       so the smaller caps stay centred in the bar. */
+    font-size: 1.54rem;
+    line-height: 1;
+    padding-top: 0.42rem;
+    gap: 0.13em;
+    font-variant: small-caps;
+}
+
+.reel-track span {
+    opacity: 1;   /* letters flow continuously; the frame's overflow:hidden clips them */
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Film-grain / noise overlay (site-wide, single layer)
+   One fixed, non-interactive grayscale noise layer over the whole viewport,
+   multiply-blended so it reads on the cream. Covers everything (images too) —
+   kept simple/light on purpose. The "film grain" motion is a compositor-only
+   transform jitter (the texture itself never re-renders). Sits above normal UI
+   but below the gallery magnifier so close-up zoom stays clean.
+   Tune: `opacity` (intensity), `background-size` (grain size), SVG
+   `baseFrequency` (density). Remove `animation` for a static grain.
+   ───────────────────────────────────────────────────────────────────────── */
+body::after {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: 9000;
+    pointer-events: none;
+    opacity: 0.18;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.6' intercept='-0.8'/%3E%3CfeFuncG type='linear' slope='2.6' intercept='-0.8'/%3E%3CfeFuncB type='linear' slope='2.6' intercept='-0.8'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 150px 150px;   /* smaller tile = finer grain */
+    will-change: transform;
+    animation: grain-jitter 0.55s steps(1) infinite;
+}
+
+@keyframes grain-jitter {
+    0%   { transform: translate(0, 0); }
+    20%  { transform: translate(-4%, 3%); }
+    40%  { transform: translate(3%, -4%); }
+    60%  { transform: translate(-3%, -3%); }
+    80%  { transform: translate(4%, 3%); }
+    100% { transform: translate(0, 0); }
+}
+
+/* Respect users who prefer reduced motion — keep the grain, drop the flicker. */
+@media (prefers-reduced-motion: reduce) {
+    body::after { animation: none; }
+}
+
+/* ── Custom crosshair cursor (rw-designer crosshair-4, public domain) ───────
+   Only the static Crosshair.cur is used: browsers do NOT support .ani (animated)
+   cursors via CSS, so the set's link/text/loading variants can't be applied —
+   those states fall back to standard keyword cursors. (.cur carries its own
+   hotspot, so none is specified here.) */
+html, body {
+    cursor: url('../../images/cursors/Crosshair.cur'), crosshair;
+}
+a, button, [role="button"], label, summary,
+.index-cta-link, #menu-trigger {
+    cursor: url('../../images/cursors/Crosshair.cur'), pointer;
+}
+input, textarea, select {
+    cursor: text;
+}
+
+/* ── Menu popup: home logo icon + group divider ─────────────────────────── */
+.menu-logo-icon {
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+}
+/* The home li uses the same padding as other items; the anchor becomes inline */
+#menu ul li.menu-home a {
+    display: inline-block;
+}
+/* Spacer between contact and shop groups */
+#menu ul li.menu-divider {
+    padding: 0;
+    height: 0.6em;          /* −50% from 1.2em (desktop) */
+    pointer-events: none;
+}
+
+/* ── "Coming soon" hover tooltip for shop / menu nav links ──────────────── */
+#coming-soon-popup {
+    position: fixed;
+    z-index: 100002;
+    pointer-events: none;
+    box-sizing: border-box;
+    aspect-ratio: 1 / 1;            /* 1:1 square */
+    padding: 0.175em 0.35em;        /* 50% of prior */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;        /* centre the two lines vertically */
+    align-items: center;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-weight: var(--fw-semi);
+    font-style: normal;
+    font-size: 0.93em;   /* 150% of prior 0.62em; padding in em keeps the ratio */
+    -webkit-text-fill-color: var(--ink);
+    -webkit-text-stroke: 0;
+    line-height: 1.25;
+    text-align: center;
+    letter-spacing: 0.15em;             /* match navbar header text tracking */
+    transform: translate(-50%, -50%);   /* centre on the drift point */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+/* Each line is its own block so "soon:)" stays on one line with the smiley. */
+#coming-soon-popup .cs-line {
+    display: block;
+    white-space: nowrap;
+}
+/* Smiley — shrunk and pulled in beside "soon".
+   Negative letter-spacing tightens : and ) into a single smiley. */
+#coming-soon-popup .cs-smiley {
+    font-size: 0.7em;
+    letter-spacing: -0.08em;
+    margin-left: 0.15em;
+}
+#coming-soon-popup.is-visible {
+    opacity: 1;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONTACT PAGE
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* Headers — Adelphe italic (keeps the outline-stroke title style) */
+.contact-page #main h2 {
+    font-style: italic;
+}
+
+/* ── Social links — own selector, distinct from #footer's nested block.
+   Mimics the footer icon treatment (pulse on hover, no colour shift, full
+   opacity) while keeping this section's existing icon size. */
+
+/* Align the heading and the icon row exactly on the same horizontal centre line.
+   The base ul.icons negative top / 2em bottom margin and li top padding skewed
+   the row off-centre vs the heading — reset them and rely on a flex gap. */
+.contact-page #main .social-links {
+    align-items: center;
+}
+.contact-page #main .social-links h2 {
+    line-height: 1;
+    height: auto;
+}
+.contact-page #main .social-links .icons {
+    margin: 0;
+    height: auto;
+    gap: 1.2rem;
+}
+.contact-page #main .social-links .icons li {
+    padding: 0;
+}
+.contact-page #main .social-links .icon.style2 {
+    line-height: 1;
+}
+.contact-page #main .social-links .icon.style2:hover {
+    color: inherit;
+    opacity: 1;
+}
+@media (hover: hover) {
+    .contact-page #main .social-links .icons li a:hover::before {
+        animation: IconPulse 0.5s ease-out forwards;
+    }
+}
+
+/* ── Spacing: form buttons sit 1.5em above the footer ──────────────────────
+   #main drops its bottom padding; the form's 1.5em bottom margin becomes the
+   gap. Footer bottom padding is trimmed too. */
+.contact-page #main {
+    padding-bottom: 0;
+}
+.contact-page .footer-form {
+    margin-bottom: 0.65em;   /* + the actions' 0.85em bottom padding ≈ 1.5em gap */
+}
+.contact-page #footer {
+    padding-bottom: 0.4rem;
+}
+
+/* ── Form typography — Compagnon Medium throughout ─────────────────────────*/
+.contact-page .footer-form,
+.contact-page .footer-form input,
+.contact-page .footer-form select,
+.contact-page .footer-form textarea,
+.contact-page .footer-form label,
+.contact-page .footer-form option {
+    font-family: var(--font-mono);
+}
+
+/* ── Dropdown: menu background accent-1 with cream text; the selected option
+   flips to cream background / accent-1 text; closed control text is accent-1. */
+.contact-page .footer-form select {
+    color: var(--accent-1);
+}
+.contact-page .footer-form select:focus {
+    color: var(--accent-1);
+}
+.contact-page .footer-form select option {
+    background: var(--accent-1);
+    color: var(--cream);
+}
+.contact-page .footer-form select option:checked {
+    background: var(--cream);
+    color: var(--accent-1);
+}
+
+/* ── Form buttons — styled after the index "get in touch" CTA button ───────
+   The section's full width is split into two equal buttons with a gap; 1.5px
+   border; CTA colours + fonts; shared btn-tilt hover motion. */
+.contact-page .footer-form ul.actions {
+    display: flex;
+    gap: 1.5em;
+    width: 100%;
+    margin: 0;
+    /* Vertical room + clip so the buttons' hover tilt can't overflow the form
+       (the form's overflow-x:hidden would otherwise force a y-scrollbar). */
+    padding: 0.85em 0;
+    overflow: hidden;
+    list-style: none;
+}
+.contact-page .footer-form ul.actions li {
+    flex: 1;
+    padding: 0;
+}
+.contact-page .footer-form ul.actions input[type="submit"],
+.contact-page .footer-form ul.actions input[type="reset"] {
+    display: block;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    border-radius: 0;
+    border: 1.5px solid currentColor;
+    background: transparent;
+    color: inherit;
+    font-family: var(--font-mono);
+    font-weight: var(--fw-regular);
+    font-variant: normal;
+    font-size: 0.75em;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    text-transform: uppercase;
+    padding: 0.9em 2.5em;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+/* Colour change on hover AND on tap (:active) so touch gets activation feedback. */
+.contact-page .footer-form ul.actions input[type="submit"]:hover,
+.contact-page .footer-form ul.actions input[type="reset"]:hover,
+.contact-page .footer-form ul.actions input[type="submit"]:active,
+.contact-page .footer-form ul.actions input[type="reset"]:active {
+    background: var(--accent-1);
+    color: var(--cream);
+    border-color: var(--border);
+    box-shadow: none;
+}
+/* The tilt wiggle is decorative — hover-only (never on touch). */
+@media (hover: hover) {
+    .contact-page .footer-form ul.actions input[type="submit"]:hover,
+    .contact-page .footer-form ul.actions input[type="reset"]:hover {
+        animation: btn-tilt 1.6s steps(1, end) infinite;
+    }
+}
+
+/* ── Priority + "email me a copy" on one compact line ──────────────────────
+   "priority:" metadata label, then Normal / High radios, with "email me a copy"
+   pushed to the right. The size is set on the children (not the col) so the col
+   keeps the grid's normal left padding — i.e. "priority:" stays aligned with the
+   fields above and isn't clipped at the edge. */
+.contact-page .footer-form .priority-line {
+    display: flex;
+    align-items: center;
+    gap: 2.5em;
+    width: 100%;
+}
+.contact-page .footer-form .priority-line .priority-label {
+    color: var(--accent-1);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    flex-shrink: 0;
+    font-size: 0.8em;
+}
+.contact-page .footer-form .priority-line .opt {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+.contact-page .footer-form .priority-line .opt-copy {
+    margin-left: auto;         /* push "email me a copy" to the right */
+}
+/* Vertically centre each control box on its label text so the row aligns. */
+.contact-page .footer-form .priority-line label {
+    margin: 0;
+    padding-left: 2.4em;
+}
+.contact-page .footer-form .priority-line label:before {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — narrow-viewport / mobile
+   Breakpoints: stack 640 (gutter pivot + single-column), xs 480 / xxs 380
+   (body-type down-scaling, handled in the type cascade above).
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Proportional down-scaling, all in one ordered place (640 → 480 → 380):
+   - --pad-x pivots 6em → 1.5em at the stack breakpoint (main + footer together).
+   - html font-size scales the rem-based images (panel-img, cta-photo) + their beds.
+   - body type base scales the em-based copy, paddings and gaps.
+   Both begin at `stack`, so after the layout goes single-column the images + copy
+   shrink together proportionally; above stack only the copy flex-shrinks. */
+@media screen and (max-width: 640px) {
+    :root { --pad-x: 1.5em; }
+    html { font-size: 15px; }
+    body, input, select, textarea { font-size: 11.5pt; }
+}
+@media screen and (max-width: 480px) {
+    html { font-size: 14px; }
+    body, input, select, textarea { font-size: 11pt; }
+    .welcome-intro { font-size: 0.8em; }
+}
+@media screen and (max-width: 380px) {
+    html { font-size: 13px; }
+    body, input, select, textarea { font-size: 10pt; }
+    .welcome-intro { font-size: 0.72em; }     
+	#selected-works-heading { letter-spacing: 0.2em; }
+    .index-page #index-works > header { gap: 2.5em; }
+}
+
+/* ── Navbar → logo-only ──────────────────────────────────────────────────
+   The flex space-between closes the gap between the link groups as the viewport
+   narrows; at ~540px that gap reaches 3em (1.5em×2). At/below it: centre the
+   logo, hide the link groups, and let a tap on the logo open the existing popup
+   (JS in main.js). The bottom-right menu trigger is removed (logo is the opener). */
+@media screen and (max-width: 540px) {
+    .nav-left .nav-links { display: none; }
+    .nav-right           { display: none; }
+    #navbar              { justify-content: center; }
+    #navbar a.logo       { margin: 0; }
+    #menu-trigger        { display: none; }
+}
+
+/* ── Tiles: index Selected Works + archive — 3 → 2 (≤980) → 1 (≤stack).
+   Below stack the 100%-width images shrink with the narrowing container/type. */
+@media screen and (max-width: 980px) {
+    .archive-tiles article { width: calc((100% - 1em) / 2); }   /* archive 3→2 */
+}
+@media screen and (max-width: 640px) {
+    .tiles { margin: 0; }
+    .tiles article { width: 100%; margin: 1.25em 0 0 0; }        /* index →1 */
+    .archive-tiles article { width: 100%; }                      /* archive →1 */
+
+    /* (CTA + index panels both stack at ≤980 — see the dedicated block below.) */
+
+    /* Contact form: name/email stack, priority line wraps, buttons stack. */
+    .contact-page .footer-form .row > .col-6 { width: 100%; }
+    .contact-page .footer-form .priority-line { flex-wrap: wrap; gap: 0.6em 1.5em; }
+    .contact-page .footer-form ul.actions { flex-direction: column; }
+}
+
+/* ── Footer: stack social-links over reel when the bar can't fit both
+   (viewport < 2× the social-links width ≈ 450px). Social stretches full width;
+   the reel keeps flowing below. Above this, social is fixed-width and the reel
+   flex-shrinks; the 6em→1.5em gutter ramp is handled by --pad-x at the stack
+   breakpoint. */
+@media screen and (max-width: 450px) {
+    /* Stacked: zero the bar's own padding so the social divisor border spans the
+       full footer width; the reel gets its own equal 0.2em L/R padding. */
+    .footer-bar {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+        padding: 0;
+    }
+    /* Social + reel are equal-height rows (each --bar-h), so the divider (the
+       social border-bottom) sits at the exact midline and splits them equally. */
+    #footer .social-links {
+		flex: none; 
+        width: 100%;
+        height: calc(var(--bar-h) * 1.125);   /* +25% breathing room */
+        box-sizing: border-box;
+        padding: 0;
+        border-bottom: 1.5px solid var(--border);   /* full-width divisor at the midline */
+    }
+    /* Icons justified across the full-width box: equal gaps + equal L/R padding. */
+    #footer .social-links .icons {
+		
+        margin: 0;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0 2.5rem;
+    }
+
+    .footer-divider { display: none; }
+    .collab-reel {
+		flex: none; 
+        width: 100%;
+        height: calc(var(--bar-h) * 0.85);    /* +25% breathing room */
+        box-sizing: border-box;
+        padding: 0 0.2em;
+    }
+}
+
+/* Copyright never wraps: keep both items on one line and start shrinking the font
+   fluidly from 500px down (so the box height never grows). */
+#footer > .inner > .copyright li { white-space: nowrap; }
+@media screen and (max-width: 500px) {
+    #footer > .inner > .copyright { font-size: min(8pt, 2.2vw); }
+}
+
+/* #4 — Contact "FOLLOW MY WORK" + social icons stack once their row would
+   collide (~the gap closing), so the icons never overflow the page. */
+@media screen and (max-width: 420px) {
+    .contact-page #main > .inner > .social-links {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.9em;
+		padding-top: 2em;
+		margin-bottom: 1.5em;
+    }
+    .contact-page #main > .inner > .social-links .icons { margin: 0; padding: 0 0 1.2em 0; }
+	.contact-page #main > .inner > .social-links h2 { margin: 0; padding: 0;}
+	.contact-page #main h2 { text-align: right; }
+}
+ 
+
+/* ── Mobile refinements (≤stack) — headers fit, CTA full-width, menu tightened.
+   All scoped to the mobile breakpoint so desktop is unchanged. */
+@media screen and (max-width: 640px) {
+    /* Welcome "hi" copy: drop the big asymmetric indent (the section already has
+       the --pad-x gutter) and shrink the lines so the longest nowrap line fits
+       (the design-word slot is now em-based, so it scales too). */
+    .indexhero-welcome { justify-content: center; padding: 4.5em 1.5em 1.5em; }
+    .welcome-intro { font-size: 0.9em; }
+    .welcome-namelogo { width: 60%; }
+
+    /* Selected Works header: tighten tracking + gap so the logo + title line
+       fits inside the 1.5em gutter at the smallest widths. */
+    #selected-works-heading { letter-spacing: 0.27em; }
+    .index-page #index-works > header { gap: 2.5em; }
+
+
+    /* Popup menu (mobile): tighter, balanced square with a --pad-x outer gutter
+       instead of the fixed 400×400; smaller "coming soon" gap + item rhythm. */
+    #menu {
+        width: auto;
+        height: auto;
+        padding: var(--pad-x) calc(var(--pad-x) * 1.5) calc(var(--pad-x) * 1.5);   /* bottom +25% */
+        max-width: calc(100vw - 3em);
+        max-height: calc(100vh - 3em);
+    }
+    #menu ul li { padding: 0.26em 0; }
+    #menu ul li.menu-divider { height: 0.4em; }   /* −40% from 1.2em (mobile) */
+}
+
+/* ── Index conveyor panels: stack at ≤980 (a 280px image + the nowrap heading
+   can't share a row below ~985px without overflowing). Image goes full-width
+   over the copy (aspect preserved, like the CTA); the heading + its underline
+   and the copy-row borders shrink so they stay inside the paper bed / frame.
+   Ordered 980 → 480 → 380 so the smaller steps win. */
+@media screen and (max-width: 980px) {
+    .index-page .panel-inner { flex-direction: column; }
+    .index-page .panel-inner .panel-card-image {
+        order: -1;            /* image on top for both cards */
+        width: 100%;          /* full content width (minus the card's frame pad) */
+        padding: 1em;
+    }
+    /* Full-width, height capped to a slice of the viewport so the stacked card
+       (image + copy) fits inside the viewport-locked frame — otherwise the bottom
+       of the copy gets clipped/unreachable. object-fit:cover keeps aspect. */
+    .index-page .panel-img { width: 100%; height: 42vh; object-fit: cover; }
+    .index-page .panel-card-text { min-width: 0; }          /* let the column shrink */
+    .index-page .panel-card-heading { padding: 0.6em 1em; }
+    .index-page .panel-card-heading h2 { font-size: 1.6em; }
+    .index-page .copy-grid-row { padding: 0.75em 1em; }
+
+    /* CTA stacks here too (same reason — photo + nowrap copy can't share a row);
+       photo card goes full content width. The img→copy gap and the CTA's bottom
+       padding are made equal so the spacing reads balanced. */
+    .cta-cards-row { flex-direction: column; gap: 2em; }
+    .cta-photo-card { width: 100%; }
+    #index-cta { padding-bottom: 2em; }
+}
+@media screen and (max-width: 480px) {
+    .index-page .panel-card-heading h2 { font-size: 1.35em; }
+    /* Welcome "hi" copy: keep it left-aligned, just give it a bit of L/R padding. */
+    .indexhero-welcome { padding: 3.5em 1.5em 1em; }
+}
+@media screen and (max-width: 380px) {
+    .index-page .panel-card-heading h2 { font-size: 1.15em; }
+}
+
+/* ── Project pages (<640): single column, content full width; the vertical
+   preview reel is relocated by JS into the sticky #hero (2nd parallax layer) as a
+   horizontal right-to-left marquee directly below the hero image. The image fills
+   the hero width and is capped so image + reel fit one viewport. */
+@media screen and (max-width: 640px) {
+    .main-grid { grid-template-columns: 1fr; column-gap: 0; }
+    .main-grid > .preview-column { display: none; }   /* pre-JS / fallback while still in the aside */
+
+    .content-right #hero {
+        flex-direction: column;
+        justify-content: center;   /* centre the image+reel group in the viewport */
+        gap: 1em;
+        box-sizing: border-box;
+    }
+    .content-right #hero .hero-panel {
+        flex: 0 1 auto;            /* natural height, can shrink — don't balloon */
+        width: 100%;
+    }
+    .content-right #hero .image-container { width: 100%; justify-content: center; }
+    .content-right #hero #hero-main {
+        /* shrink to fit within the width and the remaining height, preserving
+           aspect ratio (no crop). Capped lower so the larger reel below still
+           fits one viewport: image ≤ 50vh + reel ~22.5vh + gaps/pad < 100vh. */
+        max-width: 100%;
+        max-height: 50vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+    }
+
+    /* Relocated reel, now a horizontal band inside #hero (full hero width − pad). */
+    #hero .preview-column { display: block; flex: 0 0 auto; width: 100%; }
+    #hero .preview-mask { position: static; height: auto; width: 100%; overflow: hidden; }
+    #hero .preview-scroll { height: auto; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    #hero .preview-scroll::-webkit-scrollbar { height: 0; }
+    #hero .preview-ticker { flex-direction: row; gap: 1rem; align-items: center; }
+    #hero .preview-track { flex-direction: row; gap: 1rem; align-items: center; }
+    /* Horizontal reel: height-based; inset top/bottom (~0.6vh) so a 1.05 hover-grow
+       stays inside the band (the mask clips T/B). Reset the vertical reel's auto
+       side-margins. */
+    #hero .preview-track img {
+        width: auto;
+        height: 16.875vh;            /* −25% from 22.5vh */
+        margin: 0.6vh 0;
+    }
+    #hero .preview-track img:hover,
+    #hero .preview-track img:focus {
+        transform: scale(1.05);      /* horizontal reel */
+    }
+}
+
+/* Project page copy block: tighter padding at small widths for more text room. */
+@media screen and (max-width: 480px) {
+    .page-copy { padding: 1.5em; }
+}
+
+/* ── About page (desktop): two labelled static frames. Each frame pins centred
+   (viewport-locked, 1.5em-ish top/bottom); its card slides up from below and
+   un-tilts to flat at centre, then the frame releases to the next. JS-driven. ── */
+.about-main { padding: 0; }
+
+.about-scene {
+    position: relative;
+    height: 200vh;                 /* scroll budget: slide-in + dwell + pin */
+    box-sizing: border-box;
+    padding: 3em var(--pad-x) 0;       /* 6em L/R inset so frames sit off the edges */
+}
+
+.about-frame {
+    position: sticky;
+    top: 3.25em;                    /* 1.5em from the top … */
+    height: calc(100vh - 6em);     /* … and 1.5em from the bottom */
+    box-sizing: border-box;
+    z-index: 2;
+}
+div#about-frame-1 {
+    margin-bottom: 9em;
+}
+/* External header on the frame's top line: about = left, manifesto = right. */
+.about-label {
+    position: absolute;
+    top: 0;
+    transform: translateY(-52%);   /* sit on the top border line */
+    z-index: 3;
+    margin: 0;
+    padding: 0 0.4em;
+    background: var(--cream);       /* mask the border behind the text */
+    /* Match the index panel-card headings: Adelphe SemiBold italic, uppercase,
+       2.25em, transparent fill with a 0.5px outline. */
+    font-family: var(--font-display);
+    font-weight: var(--fw-semi);
+    font-style: italic;
+    font-variant: normal;
+    text-transform: uppercase;
+    font-size: 2.25em;
+    letter-spacing: 0.35em;        /* match the index panel headings */
+    line-height: 1;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.5px var(--ink);
+}
+.about-label-left  { left: 3em;
+    padding: 0.35em 0.25em 0 0.5em;}
+.about-label-right { right: 3em;
+    padding: 0.32em 0.29em 0 0.6em; }
+
+/* Bordered cream box; clips the sliding card. */
+.about-clip {
+    height: 100%;
+    box-sizing: border-box;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Card centred; JS sets --cardY (slide up) and rotates the boxes (tilt). */
+.about-clip .about-card {
+    position: absolute;
+    top: 50%;
+    left: 2.5em;
+    right: 2.5em;
+    transform: translateY(calc(-50% + var(--cardY, 1200px)));
+    will-change: transform;
+}
+
+/* Manifesto card keeps holes on the right (mirrors the index manifesto card). */
+#about-card-2 .panel-holes-strip {
+    order: 2;
+    border-right: none;
+    border-left: 1.5px solid var(--border);
+}
+
+/* ── About page (mobile): stack the card (image over copy); centre the headers
+   (override the desktop L/R placement) while keeping their asymmetric inner
+   padding intact; headers stay one line and shrink with the content. ───────── */
+@media screen and (max-width: 640px) {
+    .about-card { flex-direction: column; }
+    .about-card .panel-card-image { order: -1; width: 100%; padding: 1em; }
+    .about-card .panel-img { width: 100%; height: 35vh; object-fit: cover; }
+    .about-card .panel-card-text { min-width: 0; }
+
+    .about-label,
+    .about-label-left,
+    .about-label-right {
+        left: 50%;
+        right: auto;
+        transform: translate(-50%, -52%);
+        white-space: nowrap;
+        font-size: 1.6em;
+    }
+}
+@media screen and (max-width: 480px) {
+    .about-label { font-size: 1.35em; }
+}
+@media screen and (max-width: 380px) {
+    .about-label { font-size: 1.15em; }
+}

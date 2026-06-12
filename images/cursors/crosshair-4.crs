@@ -1,0 +1,45 @@
+﻿[Arrow]
+Path=Crosshair.cur
+
+[Help]
+Path=Crosshair Help Select.ani
+
+[AppStarting]
+Path=Crosshair Working in Background.ani
+
+[Wait]
+Path=Crosshair Busy.ani
+
+[Crosshair]
+Path=Crosshair Precision Select.cur
+
+[IBeam]
+Path=Crosshair Text Select.ani
+
+[NWPen]
+Path=Crosshair Handwriting.cur
+
+[No]
+Path=Crosshair Unavailable.ani
+
+[SizeNS]
+Path=Crosshair Vertical Resize.ani
+
+[SizeWE]
+Path=Crosshair Horizontal Resize.ani
+
+[SizeNESW]
+Path=Crosshair Diagonal Resize 2.ani
+
+[SizeNWSE]
+Path=Crosshair Diagonal Resize 1.ani
+
+[SizeAll]
+Path=Crosshair Move.ani
+
+[UpArrow]
+Path=Crosshair Alternate Select.cur
+
+[Hand]
+Path=Crosshair Link Select.ani
+
