@@ -105,14 +105,13 @@
             <div class="title-section">
                 <span class="title-date">06.06.08</span>
                 <span class="title-credit">personal project</span>
-                <h1>AUTU<span class="skew-m">M</span>N SONG</h1>
+                <h1>AUTUMN SONG</h1>
                 <h2>Collection</h2>
             </div>
             <section id="hero">
                 <div class="hero-panel">
                     <div class="image-container">
-                        <img id="hero-main" src="images/pic13.jpg" alt="Project hero image" data-current="images/pic13.jpg">
-                        <span class="zoom-badge" onclick="openModal(document.getElementById('hero-main').src)"><i class="fas fa-search-plus" aria-hidden="true"></i></span>
+                        <img id="hero-main" src="images/pic13.jpg" alt="Project hero image" onclick="openModal(this.src)" data-current="images/pic13.jpg">
                     </div>
                 </div>
             </section>
@@ -206,10 +205,7 @@ window.addEventListener('load', function() {
   <div class="modal-image-wrapper">
     <img class="modal-content" id="modal-image" alt="Zoomed project image">
     <div id="magnifier" class="magnifier"></div>
-  </div>
-  <div class="modal-nav">
-    <button type="button" class="modal-nav-btn modal-prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
-    <button type="button" class="modal-nav-btn modal-next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+    <button type="button" id="zoom-toggle" class="zoom-toggle" aria-label="Zoom"><i class="fas fa-search-plus"></i></button>
   </div>
 </div>
 <script>
@@ -233,6 +229,7 @@ function openModal(src) {
   modalImg.style.transform = 'scale(1)';
   zoomLevel = 1;
   modal.classList.add('is-open');
+  modal.classList.remove('is-magnifying');
   document.body.classList.add('modal-open');
   if (window.setTickerPaused) window.setTickerPaused(true);
 }
@@ -257,30 +254,7 @@ function zoomOut() {
   }
 }
 
-// Gallery nav buttons below the zoomed image: previous / next (wraps around).
-(function() {
-  var modalImg = document.getElementById('modal-image');
-  var prev = document.querySelector('.modal-prev');
-  var next = document.querySelector('.modal-next');
-  if (!modalImg || !prev || !next) return;
-  function gallery() {
-    var t = document.querySelector('.preview-track');
-    return t ? Array.prototype.slice.call(t.querySelectorAll('img'))
-                 .map(function(im) { return im.src; }) : [];
-  }
-  function go(dir) {
-    var list = gallery();
-    if (!list.length) return;
-    var i = list.indexOf(modalImg.src);
-    if (i === -1) i = 0;
-    i = (i + dir + list.length) % list.length;
-    modalImg.src = list[i];
-    modalImg.style.transform = 'scale(1)';
-    zoomLevel = 1;
-  }
-  prev.addEventListener('click', function(e) { e.stopPropagation(); go(-1); });
-  next.addEventListener('click', function(e) { e.stopPropagation(); go(1); });
-})();
+
 
 window.onclick = function(event) {
   if (event.target == document.getElementById('image-modal')) {
@@ -289,26 +263,68 @@ window.onclick = function(event) {
 }
 </script>
 <script>
-const modalImage = document.getElementById('modal-image');
-const magnifier = document.getElementById('magnifier');
+// Zoom modal interactions: left/right click navigates the gallery; the lower-
+// right button toggles a magnifier lens (the cursor becomes the lens). Clicking
+// the image while magnifying — or leaving the image — exits magnifier mode.
+(function() {
+    var modal      = document.getElementById('image-modal');
+    var modalImage = document.getElementById('modal-image');
+    var magnifier  = document.getElementById('magnifier');
+    var zoomBtn    = document.getElementById('zoom-toggle');
+    if (!modal || !modalImage) return;
 
-modalImage.addEventListener('mousemove', function(e) {
-    const rect = modalImage.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    magnifier.style.display = 'block';
-    magnifier.style.left = e.clientX + 'px';
-    magnifier.style.top = e.clientY + 'px';
-    const bgX = -(x * 1.75 - 150);
-    const bgY = -(y * 1.75 - 150);
-    magnifier.style.backgroundImage = `url('${modalImage.src}')`;
-    magnifier.style.backgroundSize = `${rect.width * 1.75}px ${rect.height * 1.75}px`;
-    magnifier.style.backgroundPosition = `${bgX}px ${bgY}px`;
-});
+    function isMag()  { return modal.classList.contains('is-magnifying'); }
+    function stopMag() {
+        modal.classList.remove('is-magnifying');
+        if (magnifier) magnifier.style.display = 'none';
+    }
 
-modalImage.addEventListener('mouseleave', function() {
-    magnifier.style.display = 'none';
-});
+    function gallery() {
+        var t = document.querySelector('.preview-track');
+        return t ? Array.prototype.slice.call(t.querySelectorAll('img'))
+                     .map(function(im) { return im.src; }) : [];
+    }
+    function nav(dir) {
+        var list = gallery();
+        if (!list.length) return;
+        var i = list.indexOf(modalImage.src);
+        if (i === -1) i = 0;
+        i = (i + dir + list.length) % list.length;
+        modalImage.src = list[i];
+        modalImage.style.transform = 'scale(1)';
+        zoomLevel = 1;
+    }
+
+    if (zoomBtn) zoomBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        modal.classList.add('is-magnifying');     // cursor becomes the lens
+    });
+
+    modalImage.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (isMag()) { stopMag(); return; }        // exit magnifier, back to button
+        var rect = modalImage.getBoundingClientRect();
+        nav((e.clientX - rect.left) < rect.width / 2 ? -1 : 1);
+    });
+
+    modalImage.addEventListener('mousemove', function(e) {
+        if (!isMag() || !magnifier) return;
+        var rect = modalImage.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        magnifier.style.display = 'block';
+        magnifier.style.left = e.clientX + 'px';
+        magnifier.style.top  = e.clientY + 'px';
+        magnifier.style.backgroundImage = "url('" + modalImage.src + "')";
+        magnifier.style.backgroundSize = (rect.width * 1.75) + 'px ' + (rect.height * 1.75) + 'px';
+        magnifier.style.backgroundPosition = (-(x * 1.75 - 150)) + 'px ' + (-(y * 1.75 - 150)) + 'px';
+    });
+
+    modalImage.addEventListener('mouseleave', function() {
+        // Stay in magnifier mode; just hide the lens until the cursor returns.
+        if (isMag() && magnifier) magnifier.style.display = 'none';
+    });
+})();
 </script>
 <script>
 (function() {
@@ -405,135 +421,11 @@ modalImage.addEventListener('mouseleave', function() {
     check();
 })();
 </script>
-<script>
-// Collab reel — continuous marquee, letters revealed one-by-one at the right edge
-(function() {
-    var collab = document.querySelector('.collab-reel');
-    var track = document.querySelector('.reel-track');
-    if (!collab || !track) return;
-
-    var phrase = track.textContent.trim();
-    var copies = 6;
-    var gap = '   ';
-    var unit = phrase + gap;
-
-    track.innerHTML = '';
-    for (var r = 0; r < copies; r++) {
-        unit.split('').forEach(function(ch) {
-            var s = document.createElement('span');
-            s.textContent = ch === ' ' ? ' ' : ch;
-            if (ch === 'm' || ch === 'M') s.className = 'skew-m';
-            track.appendChild(s);
-        });
-    }
-
-    var spans = Array.prototype.slice.call(track.querySelectorAll('span'));
-    var speed = 0.817;
-    var pos = 0;
-    var singleW = 0;
-    var containerRight = 0;
-    var offsets = null;
-
-    function measure() {
-        track.style.transform = 'translateX(0)';
-        singleW = track.scrollWidth / copies;
-        var trackBCR = track.getBoundingClientRect();
-        offsets = spans.map(function(s) {
-            return s.getBoundingClientRect().left - trackBCR.left;
-        });
-        containerRight = collab.getBoundingClientRect().right;
-    }
-
-    var lastW = window.innerWidth;
-    window.addEventListener('resize', function() {
-        // Ignore height-only resizes (mobile URL-bar show/hide) so the reel
-        // doesn't snap back to the start; only re-measure on real width changes.
-        if (window.innerWidth === lastW) return;
-        lastW = window.innerWidth;
-        pos = 0;
-        offsets = null;
-    });
-
-    function step() {
-        if (!offsets) measure();
-
-        pos -= speed;
-        if (pos <= -singleW) pos += singleW;
-        track.style.transform = 'translateX(' + pos.toFixed(2) + 'px)';
-        // letters stay visible; the frame's overflow:hidden clips the marquee
-
-        requestAnimationFrame(step);
-    }
-
-    requestAnimationFrame(step);
-})();
-</script>
+<script src="assets/js/collab-reel.js"></script>
 
 <div id="menu-cs-shop" class="menu-cs-chip">shop</div>
 <div id="menu-cs-menu" class="menu-cs-chip">menu</div>
 <div id="coming-soon-popup"><span class="cs-line">coming</span><span class="cs-line">soon<span class="cs-smiley">:)</span></span></div>
-<script>
-// Floating "coming soon" elements that drift gently around the cursor:
-//   - menu popup chips (shop / menu) on the "coming soon" label
-//   - navbar tooltip on the shop / menu nav links
-// Each element is reparented to <body> so fixed positioning maps to the
-// viewport and z-index clears the menu/wrapper stacking.
-(function() {
-    function drifter(els) {
-        var cx = 0, cy = 0, active = false, raf = null;
-        var P = els.map(function(el, i) {
-            return { x:0, y:0, init:false, ph: Math.random()*6.283,
-                     r1: 36 + i*14, r2: 20 + i*9,
-                     s1: 0.00055 + i*0.00018, s2: 0.00085 + i*0.00022,
-                     ease: 0.035 + i*0.006 };
-        });
-        function loop(t) {
-            for (var i = 0; i < els.length; i++) {
-                var p = P[i];
-                var tx = cx + Math.cos(t*p.s1 + p.ph)*p.r1 + Math.sin(t*p.s2 + p.ph)*p.r2;
-                var ty = cy + Math.sin(t*p.s1 + p.ph)*p.r1 + Math.cos(t*p.s2 + p.ph)*p.r2;
-                if (!p.init) { p.x = tx; p.y = ty; p.init = true; }
-                p.x += (tx - p.x) * p.ease;
-                p.y += (ty - p.y) * p.ease;
-                els[i].style.left = p.x + 'px';
-                els[i].style.top  = p.y + 'px';
-            }
-            if (active) raf = requestAnimationFrame(loop);
-        }
-        return {
-            move:  function(e){ cx = e.clientX; cy = e.clientY; },
-            start: function(e){ cx = e.clientX; cy = e.clientY; active = true;
-                                els.forEach(function(el){ el.classList.add('is-visible'); });
-                                cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); },
-            stop:  function(){ active = false;
-                               els.forEach(function(el){ el.classList.remove('is-visible'); }); }
-        };
-    }
-
-    // 1) Menu popup chips on the "coming soon" label
-    var chips = [document.getElementById('menu-cs-shop'),
-                 document.getElementById('menu-cs-menu')];
-    var label = document.querySelector('.menu-cs-label');
-    var menu  = document.getElementById('menu');
-    if (chips[0] && chips[1] && label && menu) {
-        chips.forEach(function(c){ if (c.parentNode !== document.body) document.body.appendChild(c); });
-        var dc = drifter(chips);
-        label.addEventListener('mouseenter', function(e){ dc.start(e); menu.addEventListener('mousemove', dc.move); });
-        label.addEventListener('mouseleave', function(){ dc.stop(); menu.removeEventListener('mousemove', dc.move); });
-    }
-
-    // 2) Navbar tooltip on the shop / menu nav links
-    var pop = document.getElementById('coming-soon-popup');
-    var navLinks = document.querySelectorAll('#navbar a[href="shop.html"], #navbar a[href="services.html"]');
-    if (pop && navLinks.length) {
-        if (pop.parentNode !== document.body) document.body.appendChild(pop);
-        var dp = drifter([pop]);
-        navLinks.forEach(function(a){
-            a.addEventListener('mouseenter', function(e){ dp.start(e); document.addEventListener('mousemove', dp.move); });
-            a.addEventListener('mouseleave', function(){ dp.stop(); document.removeEventListener('mousemove', dp.move); });
-        });
-    }
-})();
-</script>
+<script src="assets/js/coming-soon.js"></script>
 </body>
 </html>

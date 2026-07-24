@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 
 
 
@@ -116,7 +116,7 @@
 						<div class="indexhero-welcome">
 							<div class="welcome-intro" id="welcome-heading">
 								<span class="intro-line">hi.</span>
-								<span class="intro-line">welcome to my <span class="design-word">design</span> portfolio.</span>
+								<span class="intro-line">welcome to my<span class="design-word">design</span>portfolio.</span>
 								<span class="intro-line intro-line--indent">i'm</span>
 							</div>
 							<img src="images/namelogo.svg" alt="Julia Bikbaeva" class="welcome-namelogo">
@@ -650,6 +650,32 @@
 
 
 			<script>
+            (function() {
+                var tiles = document.querySelectorAll('.tiles article');
+                if (!tiles.length) return;
+                function measure(article) {
+                    var ts = article.querySelector('a h2 > span');
+                    if (ts) article.style.setProperty('--title-w', ts.offsetWidth + 'px');
+                }
+                tiles.forEach(function(article) {
+                    var content = article.querySelector('.content');
+                    if (!content || content.querySelector('.tile-date')) return;
+                    var divider = document.createElement('div');
+                    divider.className = 'tile-rule';
+                    divider.setAttribute('aria-hidden', 'true');
+                    var date = document.createElement('span');
+                    date.className = 'tile-date';
+                    date.textContent = '06.06.08';
+                    content.appendChild(divider);
+                    content.appendChild(date);
+                    measure(article);
+                });
+                window.addEventListener('load', function() { tiles.forEach(measure); });
+                window.addEventListener('resize', function() { tiles.forEach(measure); });
+            })();
+            </script>
+
+			<script>
 
 
 
@@ -761,6 +787,9 @@
                 m.textContent = ' ' + wd + ' ';
                 if (m.offsetWidth > maxW) maxW = m.offsetWidth;
             });
+            // A full space-width (slot) of breathing room on each side.
+            m.textContent = ' ';
+            maxW += m.offsetWidth * 2;
             document.body.removeChild(m);
             // Lock the slot in em (relative to the word's own font-size) so it
             // scales when .welcome-intro shrinks on mobile — otherwise a fixed px
@@ -868,8 +897,8 @@
         var y1 = travel - Z;
         var y2 = y1 + gap;
 
-        setY(card1, y1);  tilt(card1, y1, -2.1, -0.75);   // base −1.4 / −0.5  ×1.5
-        setY(card2, y2);  tilt(card2, y2,  0.75, -0.6);   // base  0.5 / −0.4  ×1.5
+        setY(card1, y1);  tilt(card1, y1, -2.1, -1.25);   // angle of card tilt
+        setY(card2, y2);  tilt(card2, y2,  1.5, 2.5);  
     }
 
     var ticking = false;
@@ -959,7 +988,7 @@ window.addEventListener('load', function() {
         unit.split('').forEach(function(ch) {
             var s = document.createElement('span');
             s.textContent = ch === ' ' ? ' ' : ch;
-            if (ch === 'm' || ch === 'M') s.className = 'skew-m';
+            if (ch === "'") s.className = 'reel-apos';
             track.appendChild(s);
         });
     }
